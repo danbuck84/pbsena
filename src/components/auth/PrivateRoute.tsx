@@ -5,9 +5,14 @@ import { useAuth } from '../../context/AuthContext';
 export const PrivateRoute: React.FC = () => {
     const { currentUser, loading } = useAuth();
 
-    if (loading) {
-        return <div className="flex h-screen items-center justify-center">Carregando...</div>;
+    // Explicitly wait for loading to be false
+    if (loading === true) {
+        return <div className="flex h-screen items-center justify-center text-primary font-medium">Carregando...</div>;
     }
 
-    return currentUser ? <Outlet /> : <Navigate to="/login" replace />;
+    if (!currentUser) {
+        return <Navigate to="/login" replace />;
+    }
+
+    return <Outlet />;
 };

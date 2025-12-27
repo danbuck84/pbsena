@@ -138,8 +138,8 @@ export const Groups: React.FC = () => {
                     <button
                         onClick={() => setActiveTab('my-groups')}
                         className={`flex-1 py-2 text-sm font-medium rounded-lg transition-all ${activeTab === 'my-groups'
-                                ? 'bg-white dark:bg-surface-dark text-primary shadow-sm'
-                                : 'text-text-secondary-light dark:text-text-secondary-dark'
+                            ? 'bg-white dark:bg-surface-dark text-primary shadow-sm'
+                            : 'text-text-secondary-light dark:text-text-secondary-dark'
                             }`}
                     >
                         Meus Grupos
@@ -147,8 +147,8 @@ export const Groups: React.FC = () => {
                     <button
                         onClick={() => setActiveTab('join')}
                         className={`flex-1 py-2 text-sm font-medium rounded-lg transition-all ${activeTab === 'join'
-                                ? 'bg-white dark:bg-surface-dark text-primary shadow-sm'
-                                : 'text-text-secondary-light dark:text-text-secondary-dark'
+                            ? 'bg-white dark:bg-surface-dark text-primary shadow-sm'
+                            : 'text-text-secondary-light dark:text-text-secondary-dark'
                             }`}
                     >
                         Entrar
@@ -156,8 +156,8 @@ export const Groups: React.FC = () => {
                     <button
                         onClick={() => setActiveTab('create')}
                         className={`flex-1 py-2 text-sm font-medium rounded-lg transition-all ${activeTab === 'create'
-                                ? 'bg-white dark:bg-surface-dark text-primary shadow-sm'
-                                : 'text-text-secondary-light dark:text-text-secondary-dark'
+                            ? 'bg-white dark:bg-surface-dark text-primary shadow-sm'
+                            : 'text-text-secondary-light dark:text-text-secondary-dark'
                             }`}
                     >
                         Criar
@@ -245,7 +245,7 @@ export const Groups: React.FC = () => {
                 onNavigate={(tab) => {
                     if (tab === 'home') navigate('/dashboard');
                     if (tab === 'groups') navigate('/groups');
-                    if (tab === 'profile') navigate('/login');
+                    if (tab === 'profile') navigate('/profile');
                 }}
             />
         </div>
