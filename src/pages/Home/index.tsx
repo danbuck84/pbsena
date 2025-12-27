@@ -147,7 +147,10 @@ export const Home: React.FC = () => {
 
             {/* FAB - Add Game */}
             <div className="fixed bottom-24 right-4 z-40 max-w-lg mx-auto w-full pointer-events-none flex justify-end px-4">
-                <button className="pointer-events-auto size-14 rounded-2xl bg-primary text-white shadow-lg shadow-primary/40 hover:bg-primary-dark hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center">
+                <button
+                    onClick={() => navigate('/new-game')}
+                    className="pointer-events-auto size-14 rounded-2xl bg-primary text-white shadow-lg shadow-primary/40 hover:bg-primary-dark hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center"
+                >
                     <span className="material-symbols-outlined text-3xl">add</span>
                 </button>
             </div>
