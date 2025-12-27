@@ -492,6 +492,7 @@ export const Groups: React.FC = () => {
                 onNavigate={(tab) => {
                     if (tab === 'home') navigate('/dashboard');
                     if (tab === 'history') navigate('/games');
+                    if (tab === 'new-game') navigate('/new-game');
                     if (tab === 'groups') navigate('/groups');
                     if (tab === 'profile') navigate('/profile');
                 }}

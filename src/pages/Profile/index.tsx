@@ -59,7 +59,7 @@ export const Profile: React.FC = () => {
                             fullWidth
                             onClick={() => toast('Em breve: Editar Perfil', { icon: '🚧' })}
                             leftIcon="edit"
-                            className="bg-white dark:bg-surface-dark border !border-gray-300 dark:!border-gray-600 text-text-primary-light dark:text-white justify-start pl-4 shadow-sm"
+                            className="bg-slate-900 dark:bg-white text-white dark:text-gray-900 border-none justify-start pl-4 shadow-sm"
                         >
                             Editar Meus Dados
                         </Button>
@@ -71,7 +71,7 @@ export const Profile: React.FC = () => {
                             fullWidth
                             onClick={() => navigate('/groups')}
                             leftIcon="groups"
-                            className="bg-white dark:bg-surface-dark border !border-gray-300 dark:!border-gray-600 text-text-primary-light dark:text-white justify-start pl-4 shadow-sm"
+                            className="bg-slate-900 dark:bg-white text-white dark:text-gray-900 border-none justify-start pl-4 shadow-sm"
                         >
                             Gerenciar Meus Bolões
                         </Button>
@@ -84,7 +84,7 @@ export const Profile: React.FC = () => {
                             fullWidth
                             onClick={() => navigate('/results')}
                             leftIcon="list_alt"
-                            className="bg-purple-50 dark:bg-purple-900/20 text-purple-800 dark:text-purple-300 border !border-purple-200 dark:!border-purple-800 justify-start pl-4 shadow-sm mb-3 font-semibold"
+                            className="bg-purple-900 dark:bg-purple-100 text-purple-50 dark:text-purple-900 border-none justify-start pl-4 shadow-sm mb-3 font-semibold"
                         >
                             Gerenciar Resultados Oficiais
                         </Button>
@@ -93,7 +93,7 @@ export const Profile: React.FC = () => {
                             fullWidth
                             onClick={() => navigate('/new-result')}
                             leftIcon="stars"
-                            className="bg-amber-50 dark:bg-amber-900/20 border !border-amber-200 dark:!border-amber-800/50 text-amber-800 dark:text-amber-400 justify-start pl-4 shadow-sm font-semibold"
+                            className="bg-amber-900 dark:bg-amber-100 text-amber-50 dark:text-amber-900 border-none justify-start pl-4 shadow-sm font-semibold"
                         >
                             Cadastrar Resultado Oficial
                         </Button>
@@ -102,7 +102,7 @@ export const Profile: React.FC = () => {
                     <Button
                         variant="primary"
                         fullWidth
-                        className="!bg-red-50 !text-red-600 !border-red-100 dark:!bg-red-900/20 dark:!text-red-400 dark:!border-red-900/30 mt-4"
+                        className="bg-red-50 text-red-600 border border-red-100 dark:bg-red-900/30 dark:text-red-300 dark:border-red-900/50 mt-4 hover:bg-red-100 dark:hover:bg-red-900/50"
                         onClick={handleLogout}
                         leftIcon="logout"
                     >
@@ -122,6 +122,8 @@ export const Profile: React.FC = () => {
                 activeTab="profile"
                 onNavigate={(tab) => {
                     if (tab === 'home') navigate('/dashboard');
+                    if (tab === 'history') navigate('/games');
+                    if (tab === 'new-game') navigate('/new-game');
                     if (tab === 'groups') navigate('/groups');
                     if (tab === 'profile') navigate('/profile');
                 }}
