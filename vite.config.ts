@@ -11,7 +11,7 @@ export default defineConfig({
             registerType: 'autoUpdate',
             includeAssets: ['favicon.ico', 'appicon.png'],
             manifest: {
-                name: 'PB Sena - Organizador de Jogos',
+                name: 'PB Sena',
                 short_name: 'PB Sena',
                 description: 'Seus jogos da Mega-Sena, organizados.',
                 theme_color: '#102213',

@@ -74,11 +74,17 @@ export const Home: React.FC = () => {
                 // Adding custom title component to include Logo
                 actions={
                     <div className="flex items-center gap-3">
-                        <button className="flex items-center justify-center size-9 bg-white dark:bg-surface-dark rounded-full shadow-sm text-text-primary-light dark:text-white">
+                        <button
+                            onClick={() => toast.success('Você não tem novas notificações.')}
+                            className="flex items-center justify-center size-9 bg-white dark:bg-surface-dark rounded-full shadow-sm text-text-primary-light dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                        >
                             <span className="material-symbols-outlined">notifications</span>
                         </button>
-                        <div className="size-9 rounded-full bg-gray-200 overflow-hidden">
-                            <img src="https://ui-avatars.com/api/?name=User&background=11d432&color=fff" alt="User" />
+                        <div
+                            onClick={() => navigate('/profile')}
+                            className="size-9 rounded-full bg-gray-200 overflow-hidden cursor-pointer hover:opacity-80 transition-opacity border border-white dark:border-gray-700 shadow-sm"
+                        >
+                            <img src={currentUser?.photoURL || "https://ui-avatars.com/api/?name=User&background=11d432&color=fff"} alt="User" className="w-full h-full object-cover" />
                         </div>
                     </div>
                 }
@@ -149,7 +155,15 @@ export const Home: React.FC = () => {
                 <section className="flex flex-col gap-3">
                     <div className="flex items-center justify-between px-1">
                         <h3 className="text-lg font-bold text-text-primary-light dark:text-white">Jogos Recentes</h3>
-                        <button className="text-sm font-medium text-primary hover:text-primary-dark transition-colors">Ver todos</button>
+                        <button
+                            onClick={(e) => {
+                                e.preventDefault();
+                                window.scrollTo({ top: 0, behavior: 'smooth' });
+                            }}
+                            className="text-sm font-medium text-primary hover:text-primary-dark transition-colors"
+                        >
+                            Ver todos
+                        </button>
                     </div>
 
                     {recentGames.length === 0 ? (
@@ -255,6 +269,7 @@ export const Home: React.FC = () => {
                 onNavigate={(tab) => {
                     console.log('Navigating to', tab);
                     if (tab === 'home') navigate('/dashboard');
+                    if (tab === 'history') navigate('/dashboard'); // Currently stays on dashboard
                     if (tab === 'new-game') navigate('/new-game');
                     if (tab === 'groups') navigate('/groups');
                     if (tab === 'profile') navigate('/profile');
