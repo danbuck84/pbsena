@@ -9,7 +9,7 @@ export default defineConfig({
         react(),
         VitePWA({
             registerType: 'autoUpdate',
-            includeAssets: ['favicon.ico', 'appicon.png'],
+            includeAssets: ['favicon.ico', 'pwa-icon.jpg'],
             manifest: {
                 name: 'PB Sena',
                 short_name: 'PB Sena',
@@ -22,16 +22,16 @@ export default defineConfig({
                 orientation: 'portrait',
                 icons: [
                     {
-                        src: 'pwa-192x192.png',
+                        src: 'pwa-icon.jpg',
                         sizes: '192x192',
-                        type: 'image/png',
-                        purpose: 'any maskable'
+                        type: 'image/jpeg',
+                        purpose: 'any'
                     },
                     {
-                        src: 'pwa-512x512.png',
+                        src: 'pwa-icon.jpg',
                         sizes: '512x512',
-                        type: 'image/png',
-                        purpose: 'any maskable'
+                        type: 'image/jpeg',
+                        purpose: 'any'
                     }
                 ]
             }

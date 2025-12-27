@@ -152,7 +152,7 @@ export const Home: React.FC = () => {
                 </section>
 
                 {/* Recent Games */}
-                <section className="flex flex-col gap-3">
+                <section id="recent-games" className="flex flex-col gap-3">
                     <div className="flex items-center justify-between px-1">
                         <h3 className="text-lg font-bold text-text-primary-light dark:text-white">Jogos Recentes</h3>
                         <button
@@ -269,7 +269,13 @@ export const Home: React.FC = () => {
                 onNavigate={(tab) => {
                     console.log('Navigating to', tab);
                     if (tab === 'home') navigate('/dashboard');
-                    if (tab === 'history') navigate('/dashboard'); // Currently stays on dashboard
+                    if (tab === 'history') {
+                        // Scroll to games section
+                        const gamesSection = document.getElementById('recent-games');
+                        if (gamesSection) {
+                            gamesSection.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }
                     if (tab === 'new-game') navigate('/new-game');
                     if (tab === 'groups') navigate('/groups');
                     if (tab === 'profile') navigate('/profile');
