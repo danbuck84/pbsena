@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { Header } from '../../components/layout/Header';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
@@ -21,17 +22,17 @@ export const NewResult: React.FC = () => {
     const handleSave = async () => {
         // Validation
         if (!contest) {
-            alert('Digite o número do concurso');
+            toast.error('Digite o número do concurso');
             return;
         }
         const parsedNumbers = numbers.map(n => parseInt(n)).filter(n => !isNaN(n) && n > 0 && n <= 60);
         if (parsedNumbers.length !== 6) {
-            alert('Preencha as 6 dezenas corretamente (1-60).');
+            toast.error('Preencha as 6 dezenas corretamente (1-60).');
             return;
         }
         // Check for duplicates
         if (new Set(parsedNumbers).size !== 6) {
-            alert('Não pode haver números repetidos.');
+            toast.error('Não pode haver números repetidos.');
             return;
         }
 
@@ -43,11 +44,11 @@ export const NewResult: React.FC = () => {
                 date: serverTimestamp(),
                 createdAt: serverTimestamp()
             });
-            alert('Resultado salvo com sucesso!');
+            toast.success('Resultado salvo com sucesso!');
             navigate('/dashboard');
         } catch (error) {
             console.error(error);
-            alert('Erro ao salvar resultado.');
+            toast.error('Erro ao salvar resultado.');
         } finally {
             setLoading(false);
         }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { Header } from '../../components/layout/Header';
 import { NumberBall } from '../../components/game/NumberBall';
 import { Button } from '../../components/ui/Button';
@@ -21,7 +22,7 @@ export const NewGame: React.FC = () => {
             setSelectedNumbers(prev => prev.filter(n => n !== num));
         } else {
             if (selectedNumbers.length >= 20) {
-                alert('Máximo de 20 números permitidos.');
+                toast.error('Máximo de 20 números permitidos.');
                 return;
             }
             setSelectedNumbers(prev => [...prev, num].sort((a, b) => a - b));
@@ -44,8 +45,7 @@ export const NewGame: React.FC = () => {
     const handleSave = async () => {
         if (selectedNumbers.length < 6) return;
         if (!currentUser) {
-            // Fallback for testing without login, or prompt login
-            alert('Você precisa estar logado para salvar.');
+            toast.error('Você precisa estar logado para salvar.');
             return;
         }
 
@@ -58,10 +58,11 @@ export const NewGame: React.FC = () => {
                 status: 'pending',
                 type: 'individual' // Hardcoded for now
             });
+            toast.success('Jogo salvo com sucesso!');
             navigate('/dashboard');
         } catch (error) {
             console.error('Error saving game:', error);
-            alert('Erro ao salvar o jogo. Tente novamente.');
+            toast.error('Erro ao salvar o jogo. Tente novamente.');
         } finally {
             setLoading(false);
         }
@@ -91,8 +92,8 @@ export const NewGame: React.FC = () => {
                         Selecione as dezenas
                     </span>
                     <div className={`px-3 py-1 rounded-full text-xs font-bold transition-colors ${selectedNumbers.length >= 6
-                            ? 'bg-primary text-white'
-                            : 'bg-gray-200 dark:bg-gray-800 text-gray-500'
+                        ? 'bg-primary text-white'
+                        : 'bg-gray-200 dark:bg-gray-800 text-gray-500'
                         }`}>
                         {selectedNumbers.length} / 20
                     </div>
