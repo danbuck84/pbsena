@@ -69,7 +69,7 @@ export const Home: React.FC = () => {
                             <span className="material-symbols-outlined">notifications</span>
                         </button>
                         <div className="size-9 rounded-full bg-gray-200 overflow-hidden">
-                            <img src="https://ui-avatars.com/api/?name=Dan+Buck&background=11d432&color=fff" alt="User" />
+                            <img src="https://ui-avatars.com/api/?name=User&background=11d432&color=fff" alt="User" />
                         </div>
                     </div>
                 }
@@ -77,7 +77,6 @@ export const Home: React.FC = () => {
 
             <main className="flex-1 w-full max-w-lg mx-auto px-4 py-6 flex flex-col gap-6">
 
-                {/* Next Draw Card */}
                 {/* Next Draw Card / Last Result */}
                 <section className="relative overflow-hidden rounded-2xl bg-white dark:bg-surface-dark shadow-sm border border-gray-100 dark:border-gray-800 p-5">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
@@ -144,33 +143,65 @@ export const Home: React.FC = () => {
                         <button className="text-sm font-medium text-primary hover:text-primary-dark transition-colors">Ver todos</button>
                     </div>
 
-                    {recentGames.map((game) => (
-                        <div key={game.id} className="bg-white dark:bg-surface-dark p-4 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col gap-3 hover:shadow-md transition-shadow cursor-pointer group">
-                            <div className="flex items-start justify-between">
-                                <div className="flex items-center gap-3">
-                                    <div className={`flex items-center justify-center size-10 rounded-full shrink-0 ${game.type === 'group' ? 'bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400' : 'bg-teal-50 dark:bg-teal-900/20 text-teal-600 dark:text-teal-400'}`}>
-                                        <span className="material-symbols-outlined">{game.type === 'group' ? 'groups' : 'person'}</span>
+                    {recentGames.length === 0 ? (
+                        <div className="text-center py-8 text-gray-500 text-sm">Nenhum jogo encontrado.</div>
+                    ) : (
+                        recentGames.map((game) => {
+                            // Logic to check hits
+                            let hits: number[] = [];
+                            let statusLabel = game.status === 'pending' ? 'Aguardando' : game.status;
+                            let isWinner = false;
+
+                            if (lastResult) {
+                                const check = checkGamesAgainstResult(game.numbers, lastResult.numbers);
+                                hits = check.hits;
+                                if (check.status !== 'Não premiado') {
+                                    statusLabel = check.status;
+                                    isWinner = true;
+                                } else if (game.status === 'pending') {
+                                    statusLabel = `${check.hitCount} acertos`;
+                                }
+                            }
+
+                            return (
+                                <div key={game.id} className="bg-white dark:bg-surface-dark p-4 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col gap-3 hover:shadow-md transition-shadow cursor-pointer group">
+                                    <div className="flex items-start justify-between">
+                                        <div className="flex items-center gap-3">
+                                            <div className={`flex items-center justify-center size-10 rounded-full shrink-0 ${game.type === 'group' ? 'bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400' : 'bg-teal-50 dark:bg-teal-900/20 text-teal-600 dark:text-teal-400'}`}>
+                                                <span className="material-symbols-outlined">{game.type === 'group' ? 'groups' : 'person'}</span>
+                                            </div>
+                                            <div>
+                                                <p className="font-bold text-text-primary-light dark:text-white">
+                                                    {game.type === 'group' ? 'Bolão' : 'Aposta Simples'}
+                                                </p>
+                                                <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark">
+                                                    {game.date?.seconds ? new Date(game.date.seconds * 1000).toLocaleDateString('pt-BR') : 'Data n/a'}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <span className={`px-2.5 py-1 rounded-md text-xs font-semibold border ${isWinner
+                                            ? 'bg-green-100 text-green-700 border-green-200'
+                                            : 'bg-yellow-50 text-yellow-700 border-yellow-100'
+                                            }`}>
+                                            {statusLabel}
+                                        </span>
                                     </div>
-                                    <div>
-                                        <p className="font-bold text-text-primary-light dark:text-white">{game.name}</p>
-                                        <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark">
-                                            Concurso {game.contest} {game.type === 'group' && `• ${game.quota} Cotas`}
-                                        </p>
+
+                                    {/* Numbers Scroll */}
+                                    <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
+                                        {game.numbers && game.numbers.map((num: number) => (
+                                            <NumberBall
+                                                key={num}
+                                                number={num}
+                                                size="sm"
+                                                isMatched={hits.includes(num)}
+                                            />
+                                        ))}
                                     </div>
                                 </div>
-                                <span className="px-2.5 py-1 rounded-md bg-yellow-50 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-400 text-xs font-semibold border border-yellow-100 dark:border-yellow-900/30">
-                                    {game.status}
-                                </span>
-                            </div>
-
-                            {/* Numbers Scroll */}
-                            <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
-                                {game.numbers.map((num) => (
-                                    <NumberBall key={num} number={num} size="sm" />
-                                ))}
-                            </div>
-                        </div>
-                    ))}
+                            );
+                        })
+                    )}
                 </section>
 
             </main>
