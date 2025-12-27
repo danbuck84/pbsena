@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface HeaderProps {
-    title: string;
+    title: React.ReactNode;
     showBack?: boolean;
     onBack?: () => void;
     actions?: React.ReactNode;
@@ -25,9 +25,9 @@ export const Header: React.FC<HeaderProps> = ({
                             <span className="material-symbols-outlined text-text-primary-light dark:text-white">arrow_back</span>
                         </button>
                     )}
-                    <h1 className="text-lg font-bold tracking-tight text-text-primary-light dark:text-text-primary-dark truncate">
+                    <div className="text-lg font-bold tracking-tight text-text-primary-light dark:text-text-primary-dark truncate flex items-center gap-2">
                         {title}
-                    </h1>
+                    </div>
                 </div>
 
                 {actions && (

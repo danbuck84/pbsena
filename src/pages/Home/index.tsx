@@ -63,7 +63,15 @@ export const Home: React.FC = () => {
     return (
         <div className="flex min-h-screen flex-col bg-background-light dark:bg-background-dark pb-24">
             <Header
-                title="PB Sena"
+                title={
+                    <div className="flex items-center gap-3">
+                        <div className="relative flex h-10 w-10 items-center justify-center rounded-full bg-white dark:bg-[#1a2e1d] shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
+                            <img src="/favicon.png" alt="Logo" className="w-full h-full object-cover" />
+                        </div>
+                        <span>PB Sena</span>
+                    </div>
+                }
+                // Adding custom title component to include Logo
                 actions={
                     <div className="flex items-center gap-3">
                         <button className="flex items-center justify-center size-9 bg-white dark:bg-surface-dark rounded-full shadow-sm text-text-primary-light dark:text-white">
@@ -240,21 +248,14 @@ export const Home: React.FC = () => {
 
             </main>
 
-            {/* FAB - Add Game */}
-            <div className="fixed bottom-24 right-4 z-40 max-w-lg mx-auto w-full pointer-events-none flex justify-end px-4">
-                <button
-                    onClick={() => navigate('/new-game')}
-                    className="pointer-events-auto size-14 rounded-2xl bg-primary text-white shadow-lg shadow-primary/40 hover:bg-primary-dark hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center"
-                >
-                    <span className="material-symbols-outlined text-3xl">add</span>
-                </button>
-            </div>
+
 
             <BottomNav
                 activeTab="home"
                 onNavigate={(tab) => {
                     console.log('Navigating to', tab);
                     if (tab === 'home') navigate('/dashboard');
+                    if (tab === 'new-game') navigate('/new-game');
                     if (tab === 'groups') navigate('/groups');
                     if (tab === 'profile') navigate('/profile');
                 }}

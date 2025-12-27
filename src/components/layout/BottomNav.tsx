@@ -3,8 +3,8 @@ import React from 'react';
 // import { Link, useLocation } from 'react-router-dom';
 
 interface BottomNavProps {
-    activeTab?: 'home' | 'history' | 'groups' | 'profile';
-    onNavigate?: (tab: 'home' | 'history' | 'groups' | 'profile') => void;
+    activeTab?: 'home' | 'history' | 'new-game' | 'groups' | 'profile';
+    onNavigate?: (tab: 'home' | 'history' | 'new-game' | 'groups' | 'profile') => void;
 }
 
 export const BottomNav: React.FC<BottomNavProps> = ({
@@ -13,9 +13,10 @@ export const BottomNav: React.FC<BottomNavProps> = ({
 }) => {
     const navItems = [
         { id: 'home', label: 'Início', icon: 'home' },
-        { id: 'history', label: 'Jogos', icon: 'receipt_long' }, // Changed from history to receipt_long based on HTML
+        { id: 'history', label: 'Jogos', icon: 'receipt_long' },
+        { id: 'new-game', label: 'Novo', icon: 'add' }, // Center FAB
         { id: 'groups', label: 'Bolões', icon: 'groups' },
-        { id: 'profile', label: 'Perfil', icon: 'person' }, // Changed from settings to person based on typical profile loc
+        { id: 'profile', label: 'Perfil', icon: 'person' },
     ] as const;
 
     return (
@@ -23,6 +24,21 @@ export const BottomNav: React.FC<BottomNavProps> = ({
             <div className="flex items-center justify-around h-16 max-w-lg mx-auto px-2">
                 {navItems.map((item) => {
                     const isActive = activeTab === item.id;
+                    const isNewGame = item.id === 'new-game';
+
+                    if (isNewGame) {
+                        return (
+                            <div key={item.id} className="relative w-16 h-full flex items-center justify-center -mt-6">
+                                <button
+                                    onClick={() => onNavigate?.(item.id)}
+                                    className="size-14 rounded-full bg-primary text-white shadow-lg shadow-primary/40 hover:bg-primary-dark active:scale-95 transition-all duration-200 flex items-center justify-center border-4 border-surface-light dark:border-surface-dark"
+                                >
+                                    <span className="material-symbols-outlined text-3xl">add</span>
+                                </button>
+                            </div>
+                        );
+                    }
+
                     return (
                         <button
                             key={item.id}
