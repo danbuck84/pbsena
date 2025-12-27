@@ -3,8 +3,11 @@ import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { useNavigate } from 'react-router-dom';
 
+import { useAuth } from '../../context/AuthContext';
+
 export const Login: React.FC = () => {
     const navigate = useNavigate();
+    const { signInWithGoogle } = useAuth();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -15,9 +18,13 @@ export const Login: React.FC = () => {
         navigate('/dashboard');
     };
 
-    const handleGoogleLogin = () => {
-        console.log('Google login attempt');
-        // TODO: Implement Firebase Google Auth
+    const handleGoogleLogin = async () => {
+        try {
+            await signInWithGoogle();
+            navigate('/dashboard');
+        } catch (error) {
+            console.error("Failed to login", error);
+        }
     };
 
     return (
