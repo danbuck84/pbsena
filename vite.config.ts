@@ -11,21 +11,27 @@ export default defineConfig({
             registerType: 'autoUpdate',
             includeAssets: ['favicon.ico', 'appicon.png'],
             manifest: {
-                name: 'PB Sena',
+                name: 'PB Sena - Organizador de Jogos',
                 short_name: 'PB Sena',
                 description: 'Seus jogos da Mega-Sena, organizados.',
-                theme_color: '#11d432',
-                background_color: '#f6f8f6',
+                theme_color: '#102213',
+                background_color: '#102213',
+                display: 'standalone',
+                scope: '/',
+                start_url: '/',
+                orientation: 'portrait',
                 icons: [
                     {
                         src: 'pwa-192x192.png',
                         sizes: '192x192',
-                        type: 'image/png'
+                        type: 'image/png',
+                        purpose: 'any maskable'
                     },
                     {
                         src: 'pwa-512x512.png',
                         sizes: '512x512',
-                        type: 'image/png'
+                        type: 'image/png',
+                        purpose: 'any maskable'
                     }
                 ]
             }

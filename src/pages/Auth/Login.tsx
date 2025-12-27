@@ -38,8 +38,8 @@ export const Login: React.FC = () => {
                 <div className="flex flex-col items-center gap-6 text-center pt-8">
                     <div className="relative group">
                         <div className="absolute -inset-1 rounded-full bg-gradient-to-tr from-primary to-accent-gold opacity-30 blur group-hover:opacity-50 transition duration-500"></div>
-                        <div className="relative flex h-24 w-24 items-center justify-center rounded-full bg-white dark:bg-[#1a2e1d] shadow-xl border border-white/50 dark:border-white/10 overflow-hidden p-4">
-                            <img src="/favicon.png" alt="PB Sena Logo" className="w-full h-full object-contain" />
+                        <div className="relative flex h-24 w-24 items-center justify-center rounded-full bg-white dark:bg-[#1a2e1d] shadow-xl border-2 border-white dark:border-white/10 overflow-hidden">
+                            <img src="/favicon.png" alt="PB Sena Logo" className="w-full h-full object-cover" />
                         </div>
                     </div>
                     <div className="space-y-2">

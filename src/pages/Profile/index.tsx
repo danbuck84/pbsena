@@ -51,27 +51,31 @@ export const Profile: React.FC = () => {
 
                 <div className="w-full border-t border-gray-100 dark:border-gray-800 my-2"></div>
 
-                {/* Actions */}
                 <div className="w-full flex-col gap-3 flex">
-                    <Button
-                        variant="secondary"
-                        fullWidth
-                        onClick={() => toast('Em breve: Editar Perfil', { icon: '🚧' })}
-                        leftIcon="edit"
-                        className="bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-700"
-                    >
-                        Editar Dados
-                    </Button>
+                    <div className="w-full">
+                        <label className="text-xs font-semibold text-gray-500 uppercase ml-1 mb-1 block">Ações da Conta</label>
+                        <Button
+                            variant="secondary"
+                            fullWidth
+                            onClick={() => toast('Em breve: Editar Perfil', { icon: '🚧' })}
+                            leftIcon="edit"
+                            className="bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-700 text-text-primary-light dark:text-white justify-start pl-4"
+                        >
+                            Editar Meus Dados
+                        </Button>
+                    </div>
 
-                    <Button
-                        variant="secondary"
-                        fullWidth
-                        onClick={() => navigate('/groups')}
-                        leftIcon="groups"
-                        className="bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-700"
-                    >
-                        Meus Bolões
-                    </Button>
+                    <div className="w-full">
+                        <Button
+                            variant="secondary"
+                            fullWidth
+                            onClick={() => navigate('/groups')}
+                            leftIcon="groups"
+                            className="bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-700 text-text-primary-light dark:text-white justify-start pl-4"
+                        >
+                            Gerenciar Meus Bolões
+                        </Button>
+                    </div>
 
                     <Button
                         variant="primary"
