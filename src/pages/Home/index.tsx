@@ -220,6 +220,8 @@ export const Home: React.FC = () => {
                 activeTab="home"
                 onNavigate={(tab) => {
                     console.log('Navigating to', tab);
+                    if (tab === 'home') navigate('/dashboard');
+                    if (tab === 'groups') navigate('/groups');
                     if (tab === 'profile') navigate('/login'); // Mock logout/profile nav
                 }}
             />

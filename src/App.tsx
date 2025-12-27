@@ -9,6 +9,8 @@ import { NewGame } from './pages/Game/NewGame';
 import { NewResult } from './pages/Result/NewResult';
 import { PrivateRoute } from './components/auth/PrivateRoute';
 
+import { Groups } from './pages/Groups';
+
 function App() {
     return (
         <BrowserRouter>
@@ -21,6 +23,7 @@ function App() {
                     <Route path="/dashboard" element={<Home />} />
                     <Route path="/new-game" element={<NewGame />} />
                     <Route path="/new-result" element={<NewResult />} />
+                    <Route path="/groups" element={<Groups />} />
                 </Route>
 
                 {/* Default route redirects to Login for now */}
