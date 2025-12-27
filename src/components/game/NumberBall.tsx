@@ -3,7 +3,8 @@ import React from 'react';
 interface NumberBallProps {
     number: number;
     isSelected?: boolean;
-    isResult?: boolean; // If true, rendering a result ball (smaller, non-interactive usually)
+    isResult?: boolean;
+    isMatched?: boolean; // Highlight for hits
     onClick?: () => void;
     size?: 'sm' | 'md' | 'lg';
 }
@@ -12,6 +13,7 @@ export const NumberBall: React.FC<NumberBallProps> = ({
     number,
     isSelected = false,
     isResult = false,
+    isMatched = false,
     onClick,
     size = 'md'
 }) => {
@@ -25,11 +27,15 @@ export const NumberBall: React.FC<NumberBallProps> = ({
     };
 
     // State styling
-    const stateClasses = isSelected
-        ? "bg-primary text-white shadow-md shadow-primary/30 ring-2 ring-primary border-transparent"
-        : isResult
-            ? "bg-white dark:bg-surface-dark border-2 border-gray-200 dark:border-gray-700 text-text-primary-light dark:text-white"
-            : "bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark hover:bg-gray-200 dark:hover:bg-gray-700 border-transparent";
+    let stateClasses = "bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark hover:bg-gray-200 dark:hover:bg-gray-700 border-transparent";
+
+    if (isSelected) {
+        stateClasses = "bg-primary text-white shadow-md shadow-primary/30 ring-2 ring-primary border-transparent";
+    } else if (isMatched) {
+        stateClasses = "bg-green-500 text-white shadow-md shadow-green-500/30 ring-2 ring-green-500 border-transparent";
+    } else if (isResult) {
+        stateClasses = "bg-white dark:bg-surface-dark border-2 border-gray-200 dark:border-gray-700 text-text-primary-light dark:text-white";
+    }
 
     return (
         <button

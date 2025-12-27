@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { db } from '../../lib/firebase';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { useAuth } from '../../context/AuthContext';
+import { checkGamesAgainstResult } from '../../utils/gameLogic';
 
 export const Home: React.FC = () => {
     const navigate = useNavigate();
@@ -69,6 +70,7 @@ export const Home: React.FC = () => {
             <main className="flex-1 w-full max-w-lg mx-auto px-4 py-6 flex flex-col gap-6">
 
                 {/* Next Draw Card */}
+                {/* Next Draw Card / Last Result */}
                 <section className="relative overflow-hidden rounded-2xl bg-white dark:bg-surface-dark shadow-sm border border-gray-100 dark:border-gray-800 p-5">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
 
@@ -76,24 +78,29 @@ export const Home: React.FC = () => {
                         <div className="flex justify-between items-start">
                             <div>
                                 <p className="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider">
-                                    Próximo Sorteio
+                                    {lastResult ? 'Último Resultado' : 'Próximo Sorteio'}
                                 </p>
                                 <h2 className="text-2xl font-bold mt-1 text-text-primary-light dark:text-white">
-                                    Concurso {nextDraw.contest}
+                                    Concurso {lastResult ? lastResult.contest : nextDraw.contest}
                                 </h2>
                             </div>
-                            <div className="bg-primary/10 text-primary-dark dark:text-primary px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
-                                <span className="material-symbols-outlined text-sm">timer</span>
-                                {nextDraw.date}
+                            {/* Only show date if it's next draw, or result date */}
+                        </div>
+
+                        {lastResult ? (
+                            <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar mt-2">
+                                {lastResult.numbers.map((n: number) => (
+                                    <NumberBall key={n} number={n} size="sm" isResult />
+                                ))}
                             </div>
-                        </div>
+                        ) : (
+                            <div className="py-2">
+                                <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark mb-1">Prêmio Estimado</p>
+                                <p className="text-4xl font-extrabold text-primary tracking-tight">{nextDraw.prize}</p>
+                            </div>
+                        )}
 
-                        <div className="py-2">
-                            <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark mb-1">Prêmio Estimado</p>
-                            <p className="text-4xl font-extrabold text-primary tracking-tight">{nextDraw.prize}</p>
-                        </div>
-
-                        {nextDraw.accumulated && (
+                        {!lastResult && nextDraw.accumulated && (
                             <div className="flex items-center gap-2 pt-2 border-t border-gray-100 dark:border-gray-700/50 mt-1">
                                 <span className="material-symbols-outlined text-amber-500 text-lg">stars</span>
                                 <p className="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">
