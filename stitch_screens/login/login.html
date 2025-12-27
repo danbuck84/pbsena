@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Login - PB Sena</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#11d432",
+              "background-light": "#f6f8f6",
+              "background-dark": "#102213",
+              "accent-gold": "#FFD700",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+            boxShadow: {
+                "glow": "0 0 15px rgba(17, 212, 50, 0.3)",
+            }
+          },
+        },
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111812] dark:text-gray-100 antialiased overflow-x-hidden">
+<div class="relative flex min-h-screen w-full flex-col items-center justify-between p-6">
+<!-- Decorative Background Gradient -->
+<div class="absolute top-0 left-0 w-full h-[60vh] bg-gradient-to-b from-primary/10 via-transparent to-transparent pointer-events-none z-0"></div>
+<!-- Main Content Area -->
+<div class="relative z-10 flex w-full max-w-[400px] flex-1 flex-col justify-center gap-8">
+<!-- Header / Logo Section -->
+<div class="flex flex-col items-center gap-6 text-center pt-8">
+<!-- Logo Container -->
+<div class="relative group">
+<div class="absolute -inset-1 rounded-full bg-gradient-to-tr from-primary to-accent-gold opacity-30 blur group-hover:opacity-50 transition duration-500"></div>
+<div class="relative flex h-24 w-24 items-center justify-center rounded-full bg-white dark:bg-[#1a2e1d] shadow-xl border border-white/50 dark:border-white/10">
+<!-- Abstract Logo Representation -->
+<div class="h-14 w-14 bg-contain bg-center bg-no-repeat opacity-90" data-alt="Four leaf clover lucky symbol gradient green" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCV_Wk07Q6Igas9mwhN0B2wyFG7iH7kkySQ1HxF-eul995D1ksEmFz6ieeijU7LAgqqnq2Mx9XhxnXTFWf9ih-6C5nmeypwpscicb253bk0NjteMUz5TjpHaJeqXtrBEhjN_yy2TkSsnD3lIzfDjLgJ8LknORvVbBD2KkQz-wwACSmMvx7lET2JIoIR6zeGQnWfKujYkdT7jNRuXjgBWQjq1j6c5jYYqOLBuytBLFtO2lPyx5hlxwvmDyLXbIXY2ke02-IxzrDdDVHU");'>
+</div>
+<!-- Overlay Icon for extra detail if image fails or to enhance -->
+<span class="material-symbols-outlined absolute text-4xl text-primary drop-shadow-sm">spa</span>
+</div>
+</div>
+<!-- Text Content -->
+<div class="space-y-2">
+<h2 class="text-[#102213] dark:text-white text-[28px] font-bold leading-tight tracking-tight">
+                        Bem-vindo ao PB Sena
+                    </h2>
+<p class="text-gray-500 dark:text-gray-400 text-base font-normal leading-normal">
+                        Seus jogos da Mega-Sena, organizados.
+                    </p>
+</div>
+</div>
+<!-- Actions Section -->
+<div class="flex flex-col gap-4 mt-4">
+<!-- Google Login Button -->
+<button class="group flex w-full cursor-pointer items-center justify-center gap-3 overflow-hidden rounded-lg h-12 px-5 bg-white dark:bg-[#1f3322] border border-gray-200 dark:border-gray-700 shadow-sm transition-all active:scale-[0.98] hover:border-gray-300 dark:hover:border-gray-600">
+<span class="material-symbols-outlined text-gray-700 dark:text-white" style="font-size: 24px;">account_circle</span>
+<span class="text-base font-semibold text-[#111812] dark:text-white tracking-[0.015em] truncate">
+                        Entrar com Google
+                    </span>
+</button>
+<!-- Email Login Button -->
+<button class="group flex w-full cursor-pointer items-center justify-center gap-3 overflow-hidden rounded-lg h-12 px-5 bg-primary hover:bg-[#0fc02d] shadow-glow text-white transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined text-white" style="font-size: 24px;">mail</span>
+<span class="text-base font-bold text-white tracking-[0.015em] truncate">
+                        Entrar com E-mail
+                    </span>
+</button>
+</div>
+<!-- Sign Up Prompt -->
+<div class="text-center">
+<p class="text-sm text-gray-600 dark:text-gray-400">
+                    Não tem uma conta? 
+                    <a class="font-semibold text-primary hover:text-[#0fc02d] transition-colors hover:underline" href="#">
+                        Cadastre-se
+                    </a>
+</p>
+</div>
+</div>
+<!-- Footer / Legal -->
+<div class="relative z-10 w-full text-center pb-2">
+<div class="flex items-center justify-center gap-4 text-xs font-medium text-gray-400 dark:text-gray-600">
+<a class="hover:text-gray-600 dark:hover:text-gray-400 transition-colors" href="#">Termos de Uso</a>
+<span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-700"></span>
+<a class="hover:text-gray-600 dark:hover:text-gray-400 transition-colors" href="#">Política de Privacidade</a>
+</div>
+</div>
+</div>
+</body></html>

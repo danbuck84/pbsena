@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Entrada Manual de Jogo - PB Sena</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#11d432", 
+              "primary-dark": "#0a8a20",
+              "background-light": "#f6f8f6",
+              "background-dark": "#102213",
+              "surface-light": "#ffffff",
+              "surface-dark": "#1a2e1d",
+              "text-primary-light": "#111812",
+              "text-primary-dark": "#e0e6e1",
+              "text-secondary-light": "#618968",
+              "text-secondary-dark": "#9ab09e",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+            gridTemplateColumns: {
+                '6': 'repeat(6, minmax(0, 1fr))',
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* Hide scrollbar for clean UI but allow scrolling */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .selected-ring {
+            box-shadow: 0 0 0 2px #fff, 0 0 0 4px #11d432;
+        }
+        
+        /* Smooth bounce animation for selection */
+        @keyframes bounce-sm {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.9); }
+            100% { transform: scale(1); }
+        }
+        .animate-tap:active {
+            animation: bounce-sm 0.15s ease-in-out;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-text-primary-light dark:text-text-primary-dark h-full min-h-screen flex flex-col">
+<!-- Header -->
+<div class="sticky top-0 z-50 bg-surface-light/90 dark:bg-surface-dark/90 backdrop-blur-md border-b border-gray-100 dark:border-gray-800 transition-colors duration-300">
+<div class="flex items-center p-4 justify-between max-w-lg mx-auto w-full">
+<button class="text-text-primary-light dark:text-text-primary-dark flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+<span class="material-symbols-outlined" style="font-size: 24px;">arrow_back_ios_new</span>
+</button>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-10">Novo Jogo</h2>
+</div>
+</div>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col items-center w-full max-w-lg mx-auto pb-32">
+<!-- Header Text -->
+<div class="w-full px-6 pt-6 pb-2 text-center">
+<h3 class="text-2xl font-bold tracking-tight text-text-primary-light dark:text-text-primary-dark mb-1">Selecione seus números</h3>
+<p class="text-text-secondary-light dark:text-text-secondary-dark text-sm leading-relaxed">
+                Escolha entre <span class="font-semibold text-primary dark:text-primary">6</span> e <span class="font-semibold text-primary dark:text-primary">20</span> dezenas.
+            </p>
+</div>
+<!-- Meta Info / Counter -->
+<div class="w-full sticky top-[72px] z-40 py-3 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-sm flex justify-center">
+<div class="inline-flex items-center justify-center px-4 py-1.5 bg-surface-light dark:bg-surface-dark rounded-full shadow-sm border border-gray-100 dark:border-gray-800">
+<span class="material-symbols-outlined text-primary mr-2" style="font-size: 18px;">check_circle</span>
+<span class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-medium">
+                    Selecionados: <strong class="text-text-primary-light dark:text-text-primary-dark">0</strong> / 20
+                </span>
+</div>
+</div>
+<!-- Number Grid -->
+<div class="w-full px-4 mt-2">
+<div class="bg-surface-light dark:bg-surface-dark rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-gray-800">
+<div class="grid grid-cols-6 gap-3 sm:gap-4 justify-items-center">
+<!-- Generating 60 numbers. Only adding class logic to a few to demonstrate active states -->
+<!-- Loop would normally generate this. Hardcoding for static output. -->
+<!-- Example Selected State -->
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary text-white font-bold text-lg shadow-md shadow-primary/30 transition-all duration-200 animate-tap">
+                        01
+                    </button>
+<!-- Example Default State -->
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        02
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        03
+                    </button>
+<!-- Example Selected State -->
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary text-white font-bold text-lg shadow-md shadow-primary/30 transition-all duration-200 animate-tap">
+                        04
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        05
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        06
+                    </button>
+<!-- Row 2 -->
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        07
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        08
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        09
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        10
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        11
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        12
+                    </button>
+<!-- Row 3 -->
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        13
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        14
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary text-white font-bold text-lg shadow-md shadow-primary/30 transition-all duration-200 animate-tap">
+                        15
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        16
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        17
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        18
+                    </button>
+<!-- Row 4 -->
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        19
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        20
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        21
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        22
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        23
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        24
+                    </button>
+<!-- Row 5 -->
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        25
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary text-white font-bold text-lg shadow-md shadow-primary/30 transition-all duration-200 animate-tap">
+                        26
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        27
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        28
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        29
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        30
+                    </button>
+<!-- Row 6 -->
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        31
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        32
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        33
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        34
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary text-white font-bold text-lg shadow-md shadow-primary/30 transition-all duration-200 animate-tap">
+                        35
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        36
+                    </button>
+<!-- Row 7 -->
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        37
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        38
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        39
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        40
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        41
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        42
+                    </button>
+<!-- Row 8 -->
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        43
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        44
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        45
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        46
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        47
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        48
+                    </button>
+<!-- Row 9 -->
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        49
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        50
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        51
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        52
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        53
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        54
+                    </button>
+<!-- Row 10 -->
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        55
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary text-white font-bold text-lg shadow-md shadow-primary/30 transition-all duration-200 animate-tap">
+                        56
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        57
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        58
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        59
+                    </button>
+<button class="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark font-medium text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 animate-tap">
+                        60
+                    </button>
+</div>
+</div>
+</div>
+<!-- Surpresinha Action -->
+<div class="w-full px-4 mt-6 mb-4">
+<button class="flex w-full items-center justify-center gap-2 px-4 py-3 bg-white dark:bg-surface-dark border-2 border-primary/20 text-primary hover:bg-primary/5 dark:hover:bg-primary/10 rounded-xl font-bold text-sm tracking-wide transition-colors">
+<span class="material-symbols-outlined">casino</span>
+                Surpresinha (Aleatório)
+            </button>
+</div>
+</main>
+<!-- Bottom Action Bar -->
+<div class="fixed bottom-0 left-0 right-0 p-4 bg-surface-light/95 dark:bg-surface-dark/95 backdrop-blur-md border-t border-gray-100 dark:border-gray-800 shadow-lg z-50">
+<div class="max-w-lg mx-auto flex gap-4">
+<button class="flex-1 flex items-center justify-center h-14 bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 rounded-xl font-bold text-base cursor-not-allowed" disabled="">
+<!-- This state would change to bg-primary text-white when validated -->
+<span class="mr-2 material-symbols-outlined text-[20px]">save</span>
+                Salvar Jogo
+            </button>
+</div>
+<!-- Safe Area Spacer for iOS Home Indicator -->
+<div class="h-4 w-full"></div>
+</div>
+</body></html>

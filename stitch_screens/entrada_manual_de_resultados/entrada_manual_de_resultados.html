@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Entrada Manual de Resultados - PB Sena</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#11d432",
+                        "primary-dark": "#0eb329",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102213",
+                        "accent-gold": "#FFD700",
+                        "surface-dark": "#1a2e1d",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom styles to hide spinner on number inputs */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark transition-colors duration-200">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden font-display">
+<!-- Header -->
+<header class="flex items-center bg-white dark:bg-surface-dark p-4 pb-2 justify-between sticky top-0 z-10 shadow-sm border-b border-gray-100 dark:border-gray-800">
+<button class="text-[#111812] dark:text-white flex size-12 shrink-0 items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+<span class="material-symbols-outlined text-2xl">arrow_back_ios_new</span>
+</button>
+<h2 class="text-[#111812] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-12">
+                Registrar Sorteio
+            </h2>
+</header>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col gap-6 px-4 py-6 max-w-md mx-auto w-full">
+<!-- Contest Info Section -->
+<div class="flex flex-col gap-4">
+<div class="flex flex-row gap-4">
+<label class="flex flex-col flex-1 min-w-[120px]">
+<p class="text-[#111812] dark:text-gray-200 text-sm font-medium leading-normal pb-2">Concurso</p>
+<div class="relative">
+<input class="form-input flex w-full min-w-0 resize-none overflow-hidden rounded-lg text-[#111812] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dbe6dd] dark:border-gray-600 bg-white dark:bg-surface-dark h-12 placeholder:text-[#618968] dark:placeholder:text-gray-500 p-4 text-base font-normal leading-normal shadow-sm transition-all" placeholder="2654" type="number" value="2654"/>
+</div>
+</label>
+<label class="flex flex-col flex-1 min-w-[120px]">
+<p class="text-[#111812] dark:text-gray-200 text-sm font-medium leading-normal pb-2">Data</p>
+<div class="relative">
+<input class="form-input flex w-full min-w-0 resize-none overflow-hidden rounded-lg text-[#111812] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dbe6dd] dark:border-gray-600 bg-white dark:bg-surface-dark h-12 placeholder:text-[#618968] p-4 text-base font-normal leading-normal shadow-sm transition-all" type="date" value="2023-11-15"/>
+</div>
+</label>
+</div>
+</div>
+<!-- Lottery Balls Input Section -->
+<div class="flex flex-col items-center gap-4 mt-2">
+<div class="text-center">
+<h2 class="text-[#111812] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Dezenas Sorteadas</h2>
+<p class="text-slate-500 dark:text-gray-400 text-sm mt-1">Digite os 6 números do sorteio</p>
+</div>
+<div class="flex justify-center w-full py-4">
+<fieldset class="grid grid-cols-6 gap-2 sm:gap-3 w-full max-w-[360px]">
+<!-- Ball 1 -->
+<div class="aspect-square relative group">
+<input class="flex w-full h-full text-center items-center justify-center rounded-full border-2 border-slate-200 dark:border-slate-600 bg-white dark:bg-surface-dark text-slate-900 dark:text-white text-xl font-bold leading-normal shadow-sm focus:outline-none focus:border-accent-gold focus:ring-2 focus:ring-accent-gold/30 dark:focus:border-accent-gold transition-all duration-200" id="ball-1" max="60" maxlength="2" oninput="if(this.value.length &gt;= 2) document.getElementById('ball-2').focus();" placeholder="--" type="number"/>
+</div>
+<!-- Ball 2 -->
+<div class="aspect-square relative group">
+<input class="flex w-full h-full text-center items-center justify-center rounded-full border-2 border-slate-200 dark:border-slate-600 bg-white dark:bg-surface-dark text-slate-900 dark:text-white text-xl font-bold leading-normal shadow-sm focus:outline-none focus:border-accent-gold focus:ring-2 focus:ring-accent-gold/30 dark:focus:border-accent-gold transition-all duration-200" id="ball-2" max="60" maxlength="2" oninput="if(this.value.length &gt;= 2) document.getElementById('ball-3').focus();" onkeydown="if(event.key === 'Backspace' &amp;&amp; this.value === '') document.getElementById('ball-1').focus();" placeholder="--" type="number"/>
+</div>
+<!-- Ball 3 -->
+<div class="aspect-square relative group">
+<input class="flex w-full h-full text-center items-center justify-center rounded-full border-2 border-slate-200 dark:border-slate-600 bg-white dark:bg-surface-dark text-slate-900 dark:text-white text-xl font-bold leading-normal shadow-sm focus:outline-none focus:border-accent-gold focus:ring-2 focus:ring-accent-gold/30 dark:focus:border-accent-gold transition-all duration-200" id="ball-3" max="60" maxlength="2" oninput="if(this.value.length &gt;= 2) document.getElementById('ball-4').focus();" onkeydown="if(event.key === 'Backspace' &amp;&amp; this.value === '') document.getElementById('ball-2').focus();" placeholder="--" type="number"/>
+</div>
+<!-- Ball 4 -->
+<div class="aspect-square relative group">
+<input class="flex w-full h-full text-center items-center justify-center rounded-full border-2 border-slate-200 dark:border-slate-600 bg-white dark:bg-surface-dark text-slate-900 dark:text-white text-xl font-bold leading-normal shadow-sm focus:outline-none focus:border-accent-gold focus:ring-2 focus:ring-accent-gold/30 dark:focus:border-accent-gold transition-all duration-200" id="ball-4" max="60" maxlength="2" oninput="if(this.value.length &gt;= 2) document.getElementById('ball-5').focus();" onkeydown="if(event.key === 'Backspace' &amp;&amp; this.value === '') document.getElementById('ball-3').focus();" placeholder="--" type="number"/>
+</div>
+<!-- Ball 5 -->
+<div class="aspect-square relative group">
+<input class="flex w-full h-full text-center items-center justify-center rounded-full border-2 border-slate-200 dark:border-slate-600 bg-white dark:bg-surface-dark text-slate-900 dark:text-white text-xl font-bold leading-normal shadow-sm focus:outline-none focus:border-accent-gold focus:ring-2 focus:ring-accent-gold/30 dark:focus:border-accent-gold transition-all duration-200" id="ball-5" max="60" maxlength="2" oninput="if(this.value.length &gt;= 2) document.getElementById('ball-6').focus();" onkeydown="if(event.key === 'Backspace' &amp;&amp; this.value === '') document.getElementById('ball-4').focus();" placeholder="--" type="number"/>
+</div>
+<!-- Ball 6 -->
+<div class="aspect-square relative group">
+<input class="flex w-full h-full text-center items-center justify-center rounded-full border-2 border-slate-200 dark:border-slate-600 bg-white dark:bg-surface-dark text-slate-900 dark:text-white text-xl font-bold leading-normal shadow-sm focus:outline-none focus:border-accent-gold focus:ring-2 focus:ring-accent-gold/30 dark:focus:border-accent-gold transition-all duration-200" id="ball-6" max="60" maxlength="2" onkeydown="if(event.key === 'Backspace' &amp;&amp; this.value === '') document.getElementById('ball-5').focus();" placeholder="--" type="number"/>
+</div>
+</fieldset>
+</div>
+</div>
+<!-- Verification Card / Info -->
+<div class="bg-white dark:bg-surface-dark rounded-xl p-4 border border-slate-100 dark:border-slate-800 shadow-sm flex items-start gap-3">
+<div class="text-primary mt-0.5">
+<span class="material-symbols-outlined">auto_awesome</span>
+</div>
+<div class="flex-1">
+<p class="text-sm text-slate-600 dark:text-slate-300">
+                        O sistema irá validar automaticamente se os números estão entre 01 e 60 e se não há duplicatas.
+                    </p>
+</div>
+</div>
+<div class="flex-1"></div>
+<!-- Action Button & Footer -->
+<div class="flex flex-col gap-4 mt-4 pb-4">
+<button class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-14 px-5 bg-primary hover:bg-primary-dark transition-colors text-[#111812] dark:text-[#052e0d] text-base font-bold leading-normal tracking-[0.015em] shadow-md shadow-primary/20 active:scale-[0.98] transform duration-100">
+<span class="material-symbols-outlined mr-2">check_circle</span>
+<span class="truncate">Processar Resultados</span>
+</button>
+<p class="text-center text-xs text-slate-400 dark:text-slate-500 px-4">
+                    Os resultados serão verificados automaticamente contra todos os bolões ativos.
+                </p>
+</div>
+</main>
+</div>
+</body></html>

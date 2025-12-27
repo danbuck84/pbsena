@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Grupos - PB Sena</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#11d432",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102213",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a2e1d",
+                        "text-light": "#111812",
+                        "text-dark": "#e0e6e1",
+                        "accent-gold": "#FFD700",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark antialiased overflow-x-hidden min-h-screen">
+<div class="relative flex min-h-screen w-full flex-col group/design-root max-w-md mx-auto shadow-xl bg-background-light dark:bg-background-dark">
+<!-- Header -->
+<header class="flex items-center justify-between p-4 pb-2 sticky top-0 z-50 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md">
+<button class="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-[#111812] dark:text-white">arrow_back</span>
+</button>
+<h2 class="text-[#111812] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Grupos</h2>
+<button class="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-[#111812] dark:text-white">person</span>
+</button>
+</header>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col items-center justify-start p-6 gap-6 w-full">
+<!-- Hero Image / Visual -->
+<div class="w-full aspect-[2/1] rounded-2xl overflow-hidden shadow-sm relative group mb-2">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
+<div class="w-full h-full bg-center bg-cover transform transition-transform duration-700 group-hover:scale-105" data-alt="Group of friends celebrating lottery win with confetti" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD1jUx4sW4Q-uE6x5y7L1AxnmHSKpRNrypb_Gug1GNTyqnrogHpt4XdrvbjIAQXNsToO8eioZp5OOx8JiNL2hKaj8SsIPgfApEw9C9b6jICr_rZcUSFw34cfqM_mFRk4AKkReQmKAD4d7KPk1LByC-m3OYTRwa8fm6N_ondg2jyVPoHwv1dwjumAjTUlE_5EYXSW5Q3RERjmAMkT4W_1m6bcrcqj6VOeiWn2CaP3Gqnu9oyIik9RmJ9qjzsDKt3rcIbvu5pfagFqNN1");'>
+</div>
+<div class="absolute bottom-4 left-4 z-20">
+<p class="text-white text-sm font-medium opacity-90">Jogue junto</p>
+<h3 class="text-white text-xl font-bold">Aumente suas chances</h3>
+</div>
+</div>
+<!-- Create Group Section -->
+<section class="w-full bg-surface-light dark:bg-surface-dark p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col items-center text-center">
+<div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-primary text-2xl">group_add</span>
+</div>
+<h2 class="text-[#111812] dark:text-white tracking-tight text-xl font-bold leading-tight mb-2">Comece um bolão</h2>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-relaxed mb-6 max-w-[260px]">
+                    Gere um código único e convide seus amigos para apostar com você.
+                </p>
+<button class="w-full flex items-center justify-center gap-2 h-12 px-6 bg-primary hover:bg-primary/90 active:scale-[0.98] transition-all rounded-xl shadow-lg shadow-primary/20 text-[#003811] text-base font-bold leading-normal tracking-[0.015em]">
+<span class="material-symbols-outlined text-xl">add</span>
+<span>Criar Grupo</span>
+</button>
+</section>
+<!-- Divider with OR -->
+<div class="relative flex py-2 items-center w-full">
+<div class="flex-grow border-t border-gray-200 dark:border-gray-700"></div>
+<span class="flex-shrink-0 mx-4 text-gray-400 dark:text-gray-500 text-xs font-medium uppercase tracking-widest">ou</span>
+<div class="flex-grow border-t border-gray-200 dark:border-gray-700"></div>
+</div>
+<!-- Join Group Section -->
+<section class="w-full bg-surface-light dark:bg-surface-dark p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col items-center">
+<div class="flex items-center gap-3 mb-4 w-full justify-center">
+<div class="w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-gray-600 dark:text-gray-300">confirmation_number</span>
+</div>
+<h2 class="text-[#111812] dark:text-white tracking-tight text-lg font-bold">Já tem um convite?</h2>
+</div>
+<div class="w-full space-y-4">
+<div class="relative">
+<label class="sr-only" for="invite-code">Código do Grupo</label>
+<input class="w-full h-14 bg-gray-50 dark:bg-black/20 border-2 border-gray-200 dark:border-gray-700 text-center text-xl tracking-[0.2em] font-bold uppercase rounded-xl focus:border-primary focus:ring-0 focus:outline-none placeholder:text-gray-300 dark:placeholder:text-gray-600 placeholder:tracking-normal placeholder:font-normal transition-colors text-gray-800 dark:text-white" id="invite-code" maxlength="6" placeholder="CÓDIGO" type="text"/>
+<div class="absolute right-4 top-1/2 -translate-y-1/2 text-primary opacity-0 transition-opacity">
+<span class="material-symbols-outlined">check_circle</span>
+</div>
+</div>
+<button class="w-full h-12 px-6 bg-gray-900 dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-100 active:scale-[0.98] transition-all rounded-xl text-base font-bold leading-normal tracking-[0.015em] disabled:opacity-50 disabled:cursor-not-allowed">
+                        Entrar no Grupo
+                    </button>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation (Contextual) -->
+<nav class="sticky bottom-0 w-full bg-surface-light dark:bg-surface-dark border-t border-gray-100 dark:border-gray-800 pb-safe pt-2 px-6 h-20 flex justify-between items-start z-40 text-xs font-medium text-gray-400 dark:text-gray-500">
+<a class="flex flex-col items-center gap-1 group" href="#">
+<span class="material-symbols-outlined text-2xl group-hover:text-primary transition-colors">home</span>
+<span class="group-hover:text-primary transition-colors">Início</span>
+</a>
+<a class="flex flex-col items-center gap-1 group text-primary" href="#">
+<span class="material-symbols-outlined text-2xl">groups</span>
+<span>Grupos</span>
+</a>
+<a class="flex flex-col items-center gap-1 group" href="#">
+<span class="material-symbols-outlined text-2xl group-hover:text-primary transition-colors">receipt_long</span>
+<span>Jogos</span>
+</a>
+<a class="flex flex-col items-center gap-1 group" href="#">
+<span class="material-symbols-outlined text-2xl group-hover:text-primary transition-colors">settings</span>
+<span>Config</span>
+</a>
+</nav>
+<!-- Toast Notification (Hidden by default, simulated presence) -->
+<div class="fixed top-20 left-1/2 -translate-x-1/2 bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-4 py-3 rounded-lg shadow-xl z-50 flex items-center gap-3 transform translate-y-[-150%] transition-transform duration-300 pointer-events-none opacity-0">
+<span class="material-symbols-outlined text-primary">check_circle</span>
+<span class="text-sm font-medium">Código copiado!</span>
+</div>
+</div>
+<!-- Safe Area Spacing for Mobile -->
+<style>
+        .pb-safe {
+            padding-bottom: env(safe-area-inset-bottom, 20px);
+        }
+    </style>
+</body></html>

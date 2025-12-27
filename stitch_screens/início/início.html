@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PB Sena - Início</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#11d432",
+                        "primary-dark": "#0ea326",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102213",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a331d",
+                        "text-main-light": "#111812",
+                        "text-main-dark": "#f0fdf4",
+                        "text-sec-light": "#618968",
+                        "text-sec-dark": "#8ba890",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar hiding for cleaner mobile look */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        /* Smooth fade for elements */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-text-main-light dark:text-text-main-dark font-display antialiased selection:bg-primary selection:text-white pb-24">
+<!-- Top App Bar -->
+<header class="sticky top-0 z-40 bg-surface-light/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-gray-100 dark:border-gray-800 transition-colors duration-300">
+<div class="flex items-center justify-between p-4 max-w-lg mx-auto w-full">
+<div class="flex items-center gap-2">
+<!-- Logo Icon -->
+<div class="flex items-center justify-center size-10 rounded-xl bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-3xl">clover_spark</span>
+</div>
+<h1 class="text-xl font-bold tracking-tight text-text-main-light dark:text-text-main-dark">
+                    PB Sena
+                </h1>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center justify-center size-10 rounded-full text-text-main-light dark:text-text-main-dark hover:bg-gray-100 dark:hover:bg-surface-dark transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border-2 border-surface-light dark:border-background-dark"></span>
+</button>
+<button class="size-9 rounded-full overflow-hidden border border-gray-200 dark:border-gray-700">
+<img alt="Profile avatar" class="w-full h-full object-cover" data-alt="User profile avatar image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNZbO0g905876cTqe27HK4jNChEjVgvKWouPEEFeENUwC28woI7avU4vpApCOjvGnAKrnUUL3NhDpPbvPILNXcA9pz-VpTDs3lIukQmPHH0zXJDNKV8KyFIPNzeNyH-LizKV-Ot9IYA1M2mkYfEwGXp2Z8qVoMw6D6cw475UDk1aOfP9-odCOMXmo9P01mW2DY2DNSRzoIrCBh_fg2hMRZDAg-tYG6AAY2WkCQhTaEKIxKjpu6rIioQHw_H_I8Vj4jr4xjJUtrYvPI"/>
+</button>
+</div>
+</div>
+</header>
+<main class="max-w-lg mx-auto w-full px-4 pt-4 flex flex-col gap-6">
+<!-- Hero Card: Next Draw -->
+<section class="fade-in" style="animation-delay: 0.05s;">
+<div class="relative overflow-hidden rounded-2xl bg-surface-light dark:bg-surface-dark shadow-sm border border-gray-100 dark:border-gray-800">
+<!-- Decorative background accent -->
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -mr-10 -mt-10"></div>
+<div class="p-5 flex flex-col gap-4 relative z-10">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-sm font-medium text-text-sec-light dark:text-text-sec-dark uppercase tracking-wider">Próximo Sorteio</p>
+<h2 class="text-2xl font-bold mt-1 text-text-main-light dark:text-text-main-dark">Concurso 2670</h2>
+</div>
+<div class="bg-primary/10 text-primary-dark dark:text-primary px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">timer</span>
+                            Amanhã, 20:00
+                        </div>
+</div>
+<div class="py-2">
+<p class="text-sm text-text-sec-light dark:text-text-sec-dark mb-1">Prêmio Estimado</p>
+<p class="text-4xl font-extrabold text-primary tracking-tight">R$ 52.000.000,00</p>
+</div>
+<div class="flex items-center gap-2 pt-2 border-t border-gray-100 dark:border-gray-700/50 mt-1">
+<span class="material-symbols-outlined text-amber-500 text-lg">stars</span>
+<p class="text-sm font-medium text-text-sec-light dark:text-text-sec-dark">Acumulado há 3 concursos!</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Stats Row -->
+<section class="grid grid-cols-2 gap-4 fade-in" style="animation-delay: 0.1s;">
+<div class="bg-surface-light dark:bg-surface-dark p-5 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col gap-1 hover:border-primary/30 transition-colors">
+<div class="size-8 rounded-lg bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 flex items-center justify-center mb-2">
+<span class="material-symbols-outlined text-xl">receipt_long</span>
+</div>
+<p class="text-text-sec-light dark:text-text-sec-dark text-sm font-medium">Meus Jogos</p>
+<p class="text-2xl font-bold text-text-main-light dark:text-text-main-dark">3</p>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark p-5 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col gap-1 hover:border-primary/30 transition-colors">
+<div class="size-8 rounded-lg bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-2">
+<span class="material-symbols-outlined text-xl">attach_money</span>
+</div>
+<p class="text-text-sec-light dark:text-text-sec-dark text-sm font-medium">Total Apostado</p>
+<p class="text-2xl font-bold text-text-main-light dark:text-text-main-dark">R$ 45,00</p>
+</div>
+</section>
+<!-- Recent Games List -->
+<section class="flex flex-col gap-3 fade-in" style="animation-delay: 0.15s;">
+<div class="flex items-center justify-between px-1">
+<h3 class="text-lg font-bold text-text-main-light dark:text-text-main-dark">Jogos Recentes</h3>
+<button class="text-sm font-medium text-primary hover:text-primary-dark transition-colors">Ver todos</button>
+</div>
+<!-- List Item 1: Group Bet -->
+<div class="bg-surface-light dark:bg-surface-dark p-4 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col gap-3 hover:shadow-md transition-shadow cursor-pointer group">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="flex items-center justify-center size-10 rounded-full bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 shrink-0">
+<span class="material-symbols-outlined">groups</span>
+</div>
+<div>
+<p class="font-bold text-text-main-light dark:text-text-main-dark group-hover:text-primary transition-colors">Bolão da Firma</p>
+<p class="text-xs text-text-sec-light dark:text-text-sec-dark">Concurso 2670 • 15 Cotas</p>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-md bg-yellow-50 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-400 text-xs font-semibold border border-yellow-100 dark:border-yellow-900/30">
+                        Aguardando
+                    </span>
+</div>
+<!-- Lottery Balls -->
+<div class="flex items-center gap-2 overflow-x-auto no-scrollbar pt-1">
+<span class="flex items-center justify-center size-8 rounded-full bg-gray-100 dark:bg-gray-800 text-text-main-light dark:text-text-main-dark text-xs font-bold shadow-sm border border-gray-200 dark:border-gray-700">04</span>
+<span class="flex items-center justify-center size-8 rounded-full bg-gray-100 dark:bg-gray-800 text-text-main-light dark:text-text-main-dark text-xs font-bold shadow-sm border border-gray-200 dark:border-gray-700">11</span>
+<span class="flex items-center justify-center size-8 rounded-full bg-gray-100 dark:bg-gray-800 text-text-main-light dark:text-text-main-dark text-xs font-bold shadow-sm border border-gray-200 dark:border-gray-700">25</span>
+<span class="flex items-center justify-center size-8 rounded-full bg-primary text-white text-xs font-bold shadow-sm ring-2 ring-primary/20">33</span>
+<span class="flex items-center justify-center size-8 rounded-full bg-gray-100 dark:bg-gray-800 text-text-main-light dark:text-text-main-dark text-xs font-bold shadow-sm border border-gray-200 dark:border-gray-700">42</span>
+<span class="flex items-center justify-center size-8 rounded-full bg-gray-100 dark:bg-gray-800 text-text-main-light dark:text-text-main-dark text-xs font-bold shadow-sm border border-gray-200 dark:border-gray-700">59</span>
+</div>
+</div>
+<!-- List Item 2: Individual Bet -->
+<div class="bg-surface-light dark:bg-surface-dark p-4 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col gap-3 hover:shadow-md transition-shadow cursor-pointer group">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="flex items-center justify-center size-10 rounded-full bg-teal-50 dark:bg-teal-900/20 text-teal-600 dark:text-teal-400 shrink-0">
+<span class="material-symbols-outlined">person</span>
+</div>
+<div>
+<p class="font-bold text-text-main-light dark:text-text-main-dark group-hover:text-primary transition-colors">Aposta Individual</p>
+<p class="text-xs text-text-sec-light dark:text-text-sec-dark">Concurso 2670 • Surpresinha</p>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-md bg-yellow-50 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-400 text-xs font-semibold border border-yellow-100 dark:border-yellow-900/30">
+                        Aguardando
+                    </span>
+</div>
+<div class="flex items-center gap-2 overflow-x-auto no-scrollbar pt-1">
+<span class="flex items-center justify-center size-8 rounded-full bg-gray-100 dark:bg-gray-800 text-text-main-light dark:text-text-main-dark text-xs font-bold shadow-sm border border-gray-200 dark:border-gray-700">02</span>
+<span class="flex items-center justify-center size-8 rounded-full bg-gray-100 dark:bg-gray-800 text-text-main-light dark:text-text-main-dark text-xs font-bold shadow-sm border border-gray-200 dark:border-gray-700">18</span>
+<span class="flex items-center justify-center size-8 rounded-full bg-gray-100 dark:bg-gray-800 text-text-main-light dark:text-text-main-dark text-xs font-bold shadow-sm border border-gray-200 dark:border-gray-700">29</span>
+<span class="flex items-center justify-center size-8 rounded-full bg-gray-100 dark:bg-gray-800 text-text-main-light dark:text-text-main-dark text-xs font-bold shadow-sm border border-gray-200 dark:border-gray-700">31</span>
+<span class="flex items-center justify-center size-8 rounded-full bg-gray-100 dark:bg-gray-800 text-text-main-light dark:text-text-main-dark text-xs font-bold shadow-sm border border-gray-200 dark:border-gray-700">45</span>
+<span class="flex items-center justify-center size-8 rounded-full bg-gray-100 dark:bg-gray-800 text-text-main-light dark:text-text-main-dark text-xs font-bold shadow-sm border border-gray-200 dark:border-gray-700">51</span>
+</div>
+</div>
+<!-- List Item 3: Past Game -->
+<div class="opacity-75 bg-surface-light dark:bg-surface-dark p-4 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col gap-3 hover:shadow-md transition-shadow cursor-pointer group">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="flex items-center justify-center size-10 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 shrink-0">
+<span class="material-symbols-outlined">history</span>
+</div>
+<div>
+<p class="font-bold text-text-main-light dark:text-text-main-dark group-hover:text-primary transition-colors">Bolão Família</p>
+<p class="text-xs text-text-sec-light dark:text-text-sec-dark">Concurso 2669 • Não premiado</p>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 text-xs font-semibold border border-gray-200 dark:border-gray-700">
+                        Conferido
+                    </span>
+</div>
+<div class="flex items-center gap-2 overflow-x-auto no-scrollbar pt-1">
+<span class="flex items-center justify-center size-8 rounded-full bg-gray-50 dark:bg-gray-900/50 text-gray-400 text-xs font-bold border border-gray-200 dark:border-gray-800">10</span>
+<span class="flex items-center justify-center size-8 rounded-full bg-gray-50 dark:bg-gray-900/50 text-gray-400 text-xs font-bold border border-gray-200 dark:border-gray-800">12</span>
+<span class="flex items-center justify-center size-8 rounded-full bg-gray-50 dark:bg-gray-900/50 text-gray-400 text-xs font-bold border border-gray-200 dark:border-gray-800">22</span>
+<span class="flex items-center justify-center size-8 rounded-full bg-gray-50 dark:bg-gray-900/50 text-gray-400 text-xs font-bold border border-gray-200 dark:border-gray-800">34</span>
+<span class="flex items-center justify-center size-8 rounded-full bg-gray-50 dark:bg-gray-900/50 text-gray-400 text-xs font-bold border border-gray-200 dark:border-gray-800">41</span>
+<span class="flex items-center justify-center size-8 rounded-full bg-gray-50 dark:bg-gray-900/50 text-gray-400 text-xs font-bold border border-gray-200 dark:border-gray-800">55</span>
+</div>
+</div>
+</section>
+</main>
+<!-- FAB: Floating Action Button -->
+<div class="fixed bottom-24 right-4 z-40 max-w-lg mx-auto w-full pointer-events-none flex justify-end px-4">
+<button class="pointer-events-auto size-14 rounded-2xl bg-primary text-white shadow-lg shadow-primary/40 hover:bg-primary-dark hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+</div>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 z-50 w-full bg-surface-light dark:bg-surface-dark border-t border-gray-200 dark:border-gray-800 pb-safe">
+<div class="flex items-center justify-around h-16 max-w-lg mx-auto px-2">
+<button class="flex flex-col items-center justify-center w-full h-full gap-1 text-primary">
+<span class="material-symbols-outlined text-[26px] fill-1">home</span>
+<span class="text-[10px] font-medium">Início</span>
+</button>
+<button class="flex flex-col items-center justify-center w-full h-full gap-1 text-text-sec-light dark:text-text-sec-dark hover:text-primary dark:hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[26px]">history</span>
+<span class="text-[10px] font-medium">Histórico</span>
+</button>
+<button class="flex flex-col items-center justify-center w-full h-full gap-1 text-text-sec-light dark:text-text-sec-dark hover:text-primary dark:hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[26px]">groups</span>
+<span class="text-[10px] font-medium">Bolões</span>
+</button>
+<button class="flex flex-col items-center justify-center w-full h-full gap-1 text-text-sec-light dark:text-text-sec-dark hover:text-primary dark:hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[26px]">settings</span>
+<span class="text-[10px] font-medium">Ajustes</span>
+</button>
+</div>
+<!-- iOS Home Indicator Spacing -->
+<div class="h-5 w-full bg-surface-light dark:bg-surface-dark"></div>
+</nav>
+<!-- Background Image for Abstract Feel (Optional subtle texture) -->
+<!-- Not strictly needed as per clean style, but keeping DOM clean -->
+</body></html>
