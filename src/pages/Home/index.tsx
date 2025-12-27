@@ -12,26 +12,34 @@ export const Home: React.FC = () => {
     const navigate = useNavigate();
     const { currentUser } = useAuth();
     const [recentGames, setRecentGames] = React.useState<any[]>([]);
+    const [lastResult, setLastResult] = React.useState<any>(null);
 
     // Mock data for Next Draw (could be fetched later)
     const nextDraw = {
-        contest: 2670,
-        date: 'Amanhã, 20:00',
-        prize: 'R$ 52.000.000,00',
+        contest: lastResult ? lastResult.contest + 1 : 2671,
+        date: 'Próximo',
+        prize: 'A definir',
         accumulated: true,
     };
 
     React.useEffect(() => {
         if (!currentUser) return;
 
-        const fetchGames = async () => {
+        const fetchData = async () => {
             try {
+                // 1. Fetch latest result
+                const rQuery = query(collection(db, 'results'));
+                const rSnap = await getDocs(rQuery);
+                const results = rSnap.docs.map(doc => doc.data());
+                // Sort by contest desc
+                results.sort((a: any, b: any) => b.contest - a.contest);
+                const latest = results.length > 0 ? results[0] : null;
+                setLastResult(latest);
+
+                // 2. Fetch User Games
                 const q = query(
                     collection(db, 'games'),
                     where("userId", "==", currentUser.uid)
-                    // Note: orderBy requires an index if mixed with where. 
-                    // skipping orderBy 'date' for now to avoid index creation error loop on MVP.
-                    // Client side sort can be done if needed.
                 );
                 const querySnapshot = await getDocs(q);
                 const games = querySnapshot.docs.map(doc => ({
@@ -39,16 +47,16 @@ export const Home: React.FC = () => {
                     ...doc.data()
                 }));
                 // Client side sort by date (desc)
-                // @ts-ignore - date is Timestamp
+                // @ts-ignore
                 games.sort((a, b) => (b.date?.seconds || 0) - (a.date?.seconds || 0));
 
                 setRecentGames(games);
             } catch (error) {
-                console.error("Error fetching games:", error);
+                console.error("Error fetching data:", error);
             }
         };
 
-        fetchGames();
+        fetchData();
     }, [currentUser]);
 
     return (
