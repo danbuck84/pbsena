@@ -8,6 +8,7 @@ import { Home } from './pages/Home';
 import { GameList } from './pages/Game/GameList';
 import { NewGame } from './pages/Game/NewGame';
 import { NewResult } from './pages/Result/NewResult';
+import { ResultList } from './pages/Result/ResultList';
 import { PrivateRoute } from './components/auth/PrivateRoute';
 
 import { Groups } from './pages/Groups';
@@ -26,6 +27,7 @@ function App() {
                     <Route path="/games" element={<GameList />} />
                     <Route path="/new-game" element={<NewGame />} />
                     <Route path="/new-result" element={<NewResult />} />
+                    <Route path="/results" element={<ResultList />} />
                     <Route path="/groups" element={<Groups />} />
                     <Route path="/profile" element={<Profile />} />
                 </Route>

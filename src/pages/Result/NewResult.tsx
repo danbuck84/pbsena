@@ -1,17 +1,31 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { Header } from '../../components/layout/Header';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { db } from '../../lib/firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, addDoc, updateDoc, doc, serverTimestamp } from 'firebase/firestore';
 
 export const NewResult: React.FC = () => {
     const navigate = useNavigate();
+    const location = useLocation();
     const [loading, setLoading] = useState(false);
     const [contest, setContest] = useState('');
     const [numbers, setNumbers] = useState<string[]>(Array(6).fill(''));
+    const editResult = location.state?.editResult;
+
+    useEffect(() => {
+        if (editResult) {
+            setContest(editResult.contest.toString());
+            if (editResult.numbers && Array.isArray(editResult.numbers)) {
+                const loadedNums = editResult.numbers.map((n: number) => n.toString());
+                // ensure 6 slots
+                while (loadedNums.length < 6) loadedNums.push('');
+                setNumbers(loadedNums);
+            }
+        }
+    }, [editResult]);
 
     const handleNumberChange = (index: number, value: string) => {
         const newNumbers = [...numbers];
@@ -38,13 +52,28 @@ export const NewResult: React.FC = () => {
 
         setLoading(true);
         try {
-            await addDoc(collection(db, 'results'), {
+            const resultData = {
                 contest: parseInt(contest),
                 numbers: parsedNumbers.sort((a, b) => a - b),
-                date: serverTimestamp(),
-                createdAt: serverTimestamp()
-            });
-            toast.success('Resultado salvo com sucesso!');
+                // Only update date if new, or keep existing? Let's refresh date if specifically editing? 
+                // Usually official results have specific dates. 
+                // For simplicity we keep original date if editing or set serverTimestamp if new.
+                // Actually, let's just update modifiedAt or similar if needed. 
+                // For now, if editResult exists, we don't change 'createdAt' or 'date' unless we add a date picker.
+                // Keeping it simple.
+            };
+
+            if (editResult) {
+                await updateDoc(doc(db, 'results', editResult.id), resultData);
+                toast.success('Resultado atualizado!');
+            } else {
+                await addDoc(collection(db, 'results'), {
+                    ...resultData,
+                    date: serverTimestamp(),
+                    createdAt: serverTimestamp()
+                });
+                toast.success('Resultado salvo com sucesso!');
+            }
             navigate('/dashboard');
         } catch (error) {
             console.error(error);
@@ -56,7 +85,7 @@ export const NewResult: React.FC = () => {
 
     return (
         <div className="flex min-h-screen flex-col bg-background-light dark:bg-background-dark pb-safe">
-            <Header title="Novo Resultado" showBack onBack={() => navigate(-1)} />
+            <Header title={editResult ? "Editar Resultado" : "Novo Resultado"} showBack onBack={() => navigate(-1)} />
 
             <main className="flex-1 w-full max-w-lg mx-auto px-4 py-6 flex flex-col gap-6">
                 <Input
@@ -86,7 +115,7 @@ export const NewResult: React.FC = () => {
 
                 <div className="mt-auto">
                     <Button variant="primary" fullWidth onClick={handleSave} isLoading={loading}>
-                        Salvar Resultado
+                        {editResult ? "Atualizar Resultado" : "Salvar Resultado"}
                     </Button>
                 </div>
             </main>

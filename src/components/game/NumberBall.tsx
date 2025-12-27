@@ -42,7 +42,7 @@ export const NumberBall: React.FC<NumberBallProps> = ({
             onClick={onClick}
             disabled={!onClick}
             className={`
-        relative flex items-center justify-center rounded-full font-bold transition-all duration-200
+        relative flex items-center justify-center rounded-full font-bold transition-all duration-200 shrink-0
         ${sizeClasses[size]}
         ${stateClasses}
         ${onClick ? 'cursor-pointer active:scale-90' : 'cursor-default'}

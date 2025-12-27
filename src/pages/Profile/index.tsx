@@ -82,6 +82,15 @@ export const Profile: React.FC = () => {
                         <Button
                             variant="secondary"
                             fullWidth
+                            onClick={() => navigate('/results')}
+                            leftIcon="list_alt"
+                            className="bg-purple-50 dark:bg-purple-900/20 text-purple-800 dark:text-purple-300 border !border-purple-200 dark:!border-purple-800 justify-start pl-4 shadow-sm mb-3 font-semibold"
+                        >
+                            Gerenciar Resultados Oficiais
+                        </Button>
+                        <Button
+                            variant="secondary"
+                            fullWidth
                             onClick={() => navigate('/new-result')}
                             leftIcon="stars"
                             className="bg-amber-50 dark:bg-amber-900/20 border !border-amber-200 dark:!border-amber-800/50 text-amber-800 dark:text-amber-400 justify-start pl-4 shadow-sm font-semibold"
