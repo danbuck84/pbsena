@@ -6,7 +6,7 @@ import { BottomNav } from '../../components/layout/BottomNav';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { db } from '../../lib/firebase';
-import { collection, query, where, getDocs, addDoc, updateDoc, arrayUnion, serverTimestamp } from 'firebase/firestore';
+import { collection, query, where, getDocs, addDoc, updateDoc, arrayUnion, serverTimestamp, doc, deleteDoc, arrayRemove } from 'firebase/firestore';
 import { useAuth } from '../../context/AuthContext';
 
 export const Groups: React.FC = () => {
@@ -15,6 +15,19 @@ export const Groups: React.FC = () => {
     const [activeTab, setActiveTab] = useState<'my-groups' | 'join' | 'create'>('my-groups');
     const [groups, setGroups] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
+
+    // Admin / Detail View
+    const [selectedGroup, setSelectedGroup] = useState<any>(null); // keeping any to avoid re-defining interface if not present in snippet
+    const [isEditing, setIsEditing] = useState(false);
+    const [editName, setEditName] = useState('');
+    const [editDesc, setEditDesc] = useState('');
+
+    useEffect(() => {
+        if (selectedGroup) {
+            setEditName(selectedGroup.name);
+            setEditDesc(selectedGroup.description);
+        }
+    }, [selectedGroup]);
 
     // Form States
     const [newGroupName, setNewGroupName] = useState('');
@@ -73,6 +86,12 @@ export const Groups: React.FC = () => {
                 code: code,
                 adminId: currentUser?.uid,
                 members: [currentUser?.uid],
+                membersDetails: [{
+                    uid: currentUser!.uid,
+                    email: currentUser!.email,
+                    displayName: currentUser!.displayName
+                }],
+                payments: { [currentUser!.uid]: false },
                 createdAt: serverTimestamp()
             });
             toast.success(`Grupo criado! Código: ${code}`);
@@ -113,7 +132,12 @@ export const Groups: React.FC = () => {
             }
 
             await updateDoc(groupDoc.ref, {
-                members: arrayUnion(currentUser?.uid)
+                members: arrayUnion(currentUser?.uid),
+                membersDetails: arrayUnion({
+                    uid: currentUser!.uid,
+                    email: currentUser!.email,
+                    displayName: currentUser!.displayName
+                })
             });
 
             toast.success('Você entrou no grupo!');
@@ -126,6 +150,222 @@ export const Groups: React.FC = () => {
             setLoading(false);
         }
     };
+
+    // Admin Functions
+    const handleUpdateGroup = async () => {
+        if (!selectedGroup) return;
+        if (!editName.trim()) {
+            toast.error('Nome é obrigatório');
+            return;
+        }
+
+        try {
+            await updateDoc(doc(db, 'groups', selectedGroup.id), {
+                name: editName,
+                description: editDesc
+            });
+
+            setSelectedGroup((prev: any) => prev ? ({ ...prev, name: editName, description: editDesc }) : null);
+            setIsEditing(false);
+            toast.success('Grupo atualizado!');
+            fetchGroups(); // refresh list
+        } catch (error) {
+            console.error(error);
+            toast.error('Erro ao atualizar grupo');
+        }
+    };
+
+    const togglePayment = async (memberUid: string, currentStatus: boolean) => {
+        if (!selectedGroup) return;
+        try {
+            const groupRef = doc(db, 'groups', selectedGroup.id);
+            const newStatus = !currentStatus;
+
+            await updateDoc(groupRef, {
+                [`payments.${memberUid}`]: newStatus
+            });
+
+            // Optimistic update
+            setSelectedGroup((prev: any) => {
+                if (!prev) return null;
+                return {
+                    ...prev,
+                    payments: {
+                        ...prev.payments,
+                        [memberUid]: newStatus
+                    }
+                };
+            });
+            toast.success('Status de pagamento atualizado');
+        } catch (error) {
+            console.error(error);
+            toast.error('Falha ao atualizar pagamento');
+        }
+    };
+
+    const removeMember = async (memberUid: string) => {
+        if (!selectedGroup) return;
+        if (!window.confirm('Remover este membro do grupo?')) return;
+
+        try {
+            const groupRef = doc(db, 'groups', selectedGroup.id);
+            // Get current memberDetails to find the one to remove
+            const memberDetailToRemove = selectedGroup.membersDetails?.find((m: any) => m.uid === memberUid);
+
+            await updateDoc(groupRef, {
+                members: arrayRemove(memberUid),
+                membersDetails: memberDetailToRemove ? arrayRemove(memberDetailToRemove) : undefined
+            });
+
+            setSelectedGroup((prev: any) => {
+                if (!prev) return null;
+                return {
+                    ...prev,
+                    members: prev.members.filter((m: string) => m !== memberUid),
+                    membersDetails: prev.membersDetails?.filter((m: any) => m.uid !== memberUid)
+                };
+            });
+            toast.success('Membro removido.');
+        } catch (error) {
+            console.error(error);
+            toast.error('Erro ao remover membro.');
+        }
+    };
+
+    const deleteGroup = async () => {
+        if (!selectedGroup) return;
+        if (!window.confirm('ATENÇÃO: Isso apagará o grupo permanentemente para TODOS os membros. Continuar?')) return;
+
+        try {
+            await deleteDoc(doc(db, 'groups', selectedGroup.id));
+            toast.success('Grupo excluído.');
+            setSelectedGroup(null);
+            fetchGroups();
+        } catch (error) {
+            console.error(error);
+            toast.error('Erro ao excluir grupo.');
+        }
+    };
+
+    // Render Group Details / Admin Panel
+    if (selectedGroup) {
+        const isAdmin = selectedGroup.adminId === currentUser?.uid;
+
+        return (
+            <div className="flex min-h-screen flex-col bg-background-light dark:bg-background-dark pb-24">
+                <Header
+                    title={isEditing ? 'Editar Grupo' : selectedGroup.name}
+                    showBack
+                    onBack={() => isEditing ? setIsEditing(false) : setSelectedGroup(null)}
+                    actions={isAdmin && !isEditing && (
+                        <div className="flex items-center gap-1">
+                            <button onClick={() => setIsEditing(true)} className="text-gray-500 hover:text-primary hover:bg-gray-50 p-2 rounded-full">
+                                <span className="material-symbols-outlined">edit</span>
+                            </button>
+                            <button onClick={deleteGroup} className="text-red-500 hover:text-red-600 hover:bg-red-50 p-2 rounded-full">
+                                <span className="material-symbols-outlined">delete</span>
+                            </button>
+                        </div>
+                    )}
+                />
+                <main className="flex-1 w-full max-w-lg mx-auto px-4 py-6 flex flex-col gap-6">
+
+                    {isEditing ? (
+                        <div className="flex flex-col gap-4">
+                            <Input
+                                label="Nome do Bolão"
+                                value={editName}
+                                onChange={(e) => setEditName(e.target.value)}
+                            />
+                            <Input
+                                label="Descrição"
+                                value={editDesc}
+                                onChange={(e) => setEditDesc(e.target.value)}
+                            />
+                            <div className="flex gap-2">
+                                <Button variant="secondary" onClick={() => setIsEditing(false)} fullWidth>
+                                    Cancelar
+                                </Button>
+                                <Button variant="primary" onClick={handleUpdateGroup} fullWidth>
+                                    Salvar
+                                </Button>
+                            </div>
+                        </div>
+                    ) : (
+                        <>
+                            <div className="bg-white dark:bg-surface-dark p-5 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800">
+                                <div className="flex justify-between items-center mb-4">
+                                    <h2 className="text-xl font-bold dark:text-white">Detalhes</h2>
+                                    <div className="flex flex-col items-end">
+                                        <span className="text-xs text-gray-500 uppercase">Código</span>
+                                        <span className="text-lg font-mono font-bold text-primary tracking-wider select-all">{selectedGroup.code}</span>
+                                    </div>
+                                </div>
+                                <p className="text-gray-600 dark:text-gray-300 mb-4">{selectedGroup.description || 'Sem descrição'}</p>
+
+                                <div className="flex items-center gap-2 text-sm text-gray-500">
+                                    <span className="material-symbols-outlined text-base">person</span>
+                                    <span>Admin: {selectedGroup.membersDetails?.find((m: any) => m.uid === selectedGroup.adminId)?.displayName || 'Admin'}</span>
+                                </div>
+                            </div>
+
+                            <div className="flex flex-col gap-3">
+                                <h3 className="font-bold text-lg dark:text-white px-1">Membros ({selectedGroup.members.length})</h3>
+                                {selectedGroup.members.map((memberUid: string) => {
+                                    const detail = selectedGroup.membersDetails?.find((m: any) => m.uid === memberUid);
+                                    const isPaid = selectedGroup.payments?.[memberUid] || false;
+                                    const isMe = memberUid === currentUser?.uid;
+                                    const isMemberAdmin = memberUid === selectedGroup.adminId;
+
+                                    return (
+                                        <div key={memberUid} className="bg-white dark:bg-surface-dark p-3 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 flex items-center justify-between">
+                                            <div className="flex items-center gap-3">
+                                                <div className="size-10 rounded-full bg-gray-200 overflow-hidden flex items-center justify-center text-gray-400">
+                                                    <span className="material-symbols-outlined">person</span>
+                                                </div>
+                                                <div>
+                                                    <p className="font-medium text-sm text-text-primary-light dark:text-white">
+                                                        {detail?.displayName || (isMe ? 'Você' : 'Membro')}
+                                                        {isMemberAdmin && <span className="text-xs text-primary ml-1">(Admin)</span>}
+                                                    </p>
+                                                    <p className="text-xs text-gray-400">{detail?.email || 'Email oculto'}</p>
+                                                </div>
+                                            </div>
+
+                                            {isAdmin ? (
+                                                <div className="flex items-center gap-3">
+                                                    <label className="flex items-center gap-2 cursor-pointer bg-gray-50 dark:bg-gray-800 px-3 py-1.5 rounded-lg border border-gray-200 dark:border-gray-700">
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={isPaid}
+                                                            onChange={() => togglePayment(memberUid, isPaid)}
+                                                            className="rounded text-primary focus:ring-primary"
+                                                        />
+                                                        <span className={`text-xs font-bold ${isPaid ? 'text-green-600' : 'text-red-500'}`}>
+                                                            {isPaid ? 'PAGO' : 'PAGAR'}
+                                                        </span>
+                                                    </label>
+                                                    {!isMemberAdmin && (
+                                                        <button onClick={() => removeMember(memberUid)} className="text-gray-400 hover:text-red-500">
+                                                            <span className="material-symbols-outlined">close</span>
+                                                        </button>
+                                                    )}
+                                                </div>
+                                            ) : (
+                                                <div className={`px-2 py-1 rounded text-xs font-bold ${isPaid ? 'bg-green-100 text-green-700' : 'bg-red-50 text-red-500'}`}>
+                                                    {isPaid ? 'PAGO' : 'PENDENTE'}
+                                                </div>
+                                            )}
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </>
+                    )}
+                </main>
+            </div>
+        );
+    }
 
     return (
         <div className="flex min-h-screen flex-col bg-background-light dark:bg-background-dark pb-24">
@@ -174,7 +414,11 @@ export const Groups: React.FC = () => {
                             </div>
                         )}
                         {groups.map(group => (
-                            <div key={group.id} className="bg-white dark:bg-surface-dark p-4 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800">
+                            <div
+                                key={group.id}
+                                onClick={() => setSelectedGroup(group)}
+                                className="bg-white dark:bg-surface-dark p-4 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 cursor-pointer hover:shadow-md transition-all active:scale-[0.99]"
+                            >
                                 <div className="flex justify-between items-start">
                                     <div>
                                         <h3 className="font-bold text-lg text-text-primary-light dark:text-white">{group.name}</h3>
@@ -187,6 +431,9 @@ export const Groups: React.FC = () => {
                                 <div className="mt-3 flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
                                     <span className="material-symbols-outlined text-sm">person</span>
                                     {group.members.length} membros
+                                    {group.adminId === currentUser?.uid && (
+                                        <span className="ml-auto bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full text-[10px] uppercase font-bold tracking-wide">Admin</span>
+                                    )}
                                 </div>
                             </div>
                         ))}
@@ -244,6 +491,7 @@ export const Groups: React.FC = () => {
                 activeTab="groups"
                 onNavigate={(tab) => {
                     if (tab === 'home') navigate('/dashboard');
+                    if (tab === 'history') navigate('/games');
                     if (tab === 'groups') navigate('/groups');
                     if (tab === 'profile') navigate('/profile');
                 }}

@@ -59,7 +59,7 @@ export const Profile: React.FC = () => {
                             fullWidth
                             onClick={() => toast('Em breve: Editar Perfil', { icon: '🚧' })}
                             leftIcon="edit"
-                            className="bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-700 text-text-primary-light dark:text-white justify-start pl-4"
+                            className="bg-white dark:bg-surface-dark border !border-gray-300 dark:!border-gray-600 text-text-primary-light dark:text-white justify-start pl-4 shadow-sm"
                         >
                             Editar Meus Dados
                         </Button>
@@ -71,9 +71,22 @@ export const Profile: React.FC = () => {
                             fullWidth
                             onClick={() => navigate('/groups')}
                             leftIcon="groups"
-                            className="bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-700 text-text-primary-light dark:text-white justify-start pl-4"
+                            className="bg-white dark:bg-surface-dark border !border-gray-300 dark:!border-gray-600 text-text-primary-light dark:text-white justify-start pl-4 shadow-sm"
                         >
                             Gerenciar Meus Bolões
+                        </Button>
+                    </div>
+
+                    <div className="w-full pt-4 border-t border-gray-100 dark:border-gray-800">
+                        <label className="text-xs font-semibold text-gray-500 uppercase ml-1 mb-1 block">Administração</label>
+                        <Button
+                            variant="secondary"
+                            fullWidth
+                            onClick={() => navigate('/new-result')}
+                            leftIcon="stars"
+                            className="bg-amber-50 dark:bg-amber-900/20 border !border-amber-200 dark:!border-amber-800/50 text-amber-800 dark:text-amber-400 justify-start pl-4 shadow-sm font-semibold"
+                        >
+                            Cadastrar Resultado Oficial
                         </Button>
                     </div>
 

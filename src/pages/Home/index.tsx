@@ -4,10 +4,11 @@ import { BottomNav } from '../../components/layout/BottomNav';
 import { NumberBall } from '../../components/game/NumberBall';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../../lib/firebase';
-import { collection, query, where, getDocs, deleteDoc, doc } from 'firebase/firestore';
+import { collection, query, where, getDocs, deleteDoc, doc, addDoc } from 'firebase/firestore';
 import { useAuth } from '../../context/AuthContext';
 import { checkGamesAgainstResult } from '../../utils/gameLogic';
 import toast from 'react-hot-toast';
+import { fetchLatestResult } from '../../services/lotteryApi';
 
 export const Home: React.FC = () => {
     const navigate = useNavigate();
@@ -15,29 +16,83 @@ export const Home: React.FC = () => {
     const [recentGames, setRecentGames] = React.useState<any[]>([]);
     const [lastResult, setLastResult] = React.useState<any>(null);
 
-    // Mock data for Next Draw (could be fetched later)
-    const nextDraw = {
-        contest: lastResult ? lastResult.contest + 1 : 2671,
-        date: 'Próximo',
+    const [nextDrawInfo, setNextDrawInfo] = React.useState<{ contest: number | string, date: string, prize: string, accumulated: boolean }>({
+        contest: '...',
+        date: 'Carregando...',
         prize: 'A definir',
-        accumulated: true,
-    };
+        accumulated: false
+    });
 
     React.useEffect(() => {
         if (!currentUser) return;
 
         const fetchData = async () => {
             try {
-                // 1. Fetch latest result
+                // 1. Fetch latest result locally first to show something fast
                 const rQuery = query(collection(db, 'results'));
                 const rSnap = await getDocs(rQuery);
                 const results = rSnap.docs.map(doc => doc.data());
-                // Sort by contest desc
                 results.sort((a: any, b: any) => b.contest - a.contest);
-                const latest = results.length > 0 ? results[0] : null;
+                let latestLocal = results.length > 0 ? results[0] : null;
+
+                // 2. Fetch from External API
+                const apiData = await fetchLatestResult();
+                let latest = latestLocal;
+
+                if (apiData) {
+                    // Update Next Draw Info
+                    const nextPrize = apiData.valorEstimadoProximoConcurso
+                        ? apiData.valorEstimadoProximoConcurso.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+                        : 'A definir';
+
+                    setNextDrawInfo({
+                        contest: apiData.numero + 1,
+                        date: apiData.dataProximoConcurso || 'Em breve',
+                        prize: nextPrize,
+                        accumulated: apiData.acumulado
+                    });
+
+                    // Auto-save result if new
+                    const alreadyExists = results.some((r: any) => r.contest === apiData.numero);
+                    if (!alreadyExists) {
+                        try {
+                            const newResultData = {
+                                contest: apiData.numero,
+                                numbers: apiData.dezenas.map(d => parseInt(d)),
+                                date: apiData.dataApuracao,
+                                prize: 0 // Optional, not strictly needed for logic
+                            };
+                            await addDoc(collection(db, 'results'), newResultData);
+                            console.log("New result auto-saved from API:", apiData.numero);
+                            latest = newResultData; // Use new data immediately for checking
+                        } catch (saveErr) {
+                            console.error("Auto-save failed", saveErr);
+                        }
+                    } else {
+                        // If it exists locally check if local is same as api (it should be)
+                        if (latestLocal && latestLocal.contest === apiData.numero) {
+                            latest = latestLocal;
+                        } else {
+                            // Api has newer than local but we failed 'some' check? Unlikely unless race condition
+                            const found = results.find((r: any) => r.contest === apiData.numero);
+                            if (found) latest = found;
+                        }
+                    }
+                } else {
+                    // Fallback next draw info if API fails
+                    if (latestLocal) {
+                        setNextDrawInfo({
+                            contest: latestLocal.contest + 1,
+                            date: 'Próximo',
+                            prize: 'A definir',
+                            accumulated: true
+                        });
+                    }
+                }
+
                 setLastResult(latest);
 
-                // 2. Fetch User Games
+                // 3. Fetch User Games
                 const q = query(
                     collection(db, 'games'),
                     where("userId", "==", currentUser.uid)
@@ -103,10 +158,15 @@ export const Home: React.FC = () => {
                                     {lastResult ? 'Último Resultado' : 'Próximo Sorteio'}
                                 </p>
                                 <h2 className="text-2xl font-bold mt-1 text-text-primary-light dark:text-white">
-                                    Concurso {lastResult ? lastResult.contest : nextDraw.contest}
+                                    Concurso {lastResult ? lastResult.contest : nextDrawInfo.contest}
                                 </h2>
                             </div>
-                            {/* Only show date if it's next draw, or result date */}
+                            {/* Next Draw Date Badge */}
+                            {!lastResult && (
+                                <span className="bg-primary/10 text-primary-dark dark:text-primary px-3 py-1 rounded-full text-xs font-bold tracking-wide">
+                                    {nextDrawInfo.date}
+                                </span>
+                            )}
                         </div>
 
                         {lastResult ? (
@@ -118,11 +178,11 @@ export const Home: React.FC = () => {
                         ) : (
                             <div className="py-2">
                                 <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark mb-1">Prêmio Estimado</p>
-                                <p className="text-4xl font-extrabold text-primary tracking-tight">{nextDraw.prize}</p>
+                                <p className="text-4xl font-extrabold text-primary tracking-tight">{nextDrawInfo.prize}</p>
                             </div>
                         )}
 
-                        {!lastResult && nextDraw.accumulated && (
+                        {!lastResult && nextDrawInfo.accumulated && (
                             <div className="flex items-center gap-2 pt-2 border-t border-gray-100 dark:border-gray-700/50 mt-1">
                                 <span className="material-symbols-outlined text-amber-500 text-lg">stars</span>
                                 <p className="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">
@@ -156,10 +216,7 @@ export const Home: React.FC = () => {
                     <div className="flex items-center justify-between px-1">
                         <h3 className="text-lg font-bold text-text-primary-light dark:text-white">Jogos Recentes</h3>
                         <button
-                            onClick={(e) => {
-                                e.preventDefault();
-                                window.scrollTo({ top: 0, behavior: 'smooth' });
-                            }}
+                            onClick={() => navigate('/games')}
                             className="text-sm font-medium text-primary hover:text-primary-dark transition-colors"
                         >
                             Ver todos
@@ -267,15 +324,8 @@ export const Home: React.FC = () => {
             <BottomNav
                 activeTab="home"
                 onNavigate={(tab) => {
-                    console.log('Navigating to', tab);
                     if (tab === 'home') navigate('/dashboard');
-                    if (tab === 'history') {
-                        // Scroll to games section
-                        const gamesSection = document.getElementById('recent-games');
-                        if (gamesSection) {
-                            gamesSection.scrollIntoView({ behavior: 'smooth' });
-                        }
-                    }
+                    if (tab === 'history') navigate('/games');
                     if (tab === 'new-game') navigate('/new-game');
                     if (tab === 'groups') navigate('/groups');
                     if (tab === 'profile') navigate('/profile');

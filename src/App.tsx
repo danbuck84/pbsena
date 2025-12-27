@@ -5,6 +5,7 @@ import { Login } from './pages/Auth/Login';
 import { Toaster } from 'react-hot-toast';
 
 import { Home } from './pages/Home';
+import { GameList } from './pages/Game/GameList';
 import { NewGame } from './pages/Game/NewGame';
 import { NewResult } from './pages/Result/NewResult';
 import { PrivateRoute } from './components/auth/PrivateRoute';
@@ -22,6 +23,7 @@ function App() {
                 {/* Protected Routes */}
                 <Route element={<PrivateRoute />}>
                     <Route path="/dashboard" element={<Home />} />
+                    <Route path="/games" element={<GameList />} />
                     <Route path="/new-game" element={<NewGame />} />
                     <Route path="/new-result" element={<NewResult />} />
                     <Route path="/groups" element={<Groups />} />
