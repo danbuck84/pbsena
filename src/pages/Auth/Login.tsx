@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
+import { useNavigate } from 'react-router-dom';
 
 export const Login: React.FC = () => {
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -10,6 +12,7 @@ export const Login: React.FC = () => {
         e.preventDefault();
         console.log('Login attempt:', { email, password });
         // TODO: Implement Firebase Auth
+        navigate('/dashboard');
     };
 
     const handleGoogleLogin = () => {
