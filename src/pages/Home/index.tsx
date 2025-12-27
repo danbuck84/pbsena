@@ -3,10 +3,16 @@ import { Header } from '../../components/layout/Header';
 import { BottomNav } from '../../components/layout/BottomNav';
 import { NumberBall } from '../../components/game/NumberBall';
 import { useNavigate } from 'react-router-dom';
+import { db } from '../../lib/firebase';
+import { collection, query, where, getDocs } from 'firebase/firestore';
+import { useAuth } from '../../context/AuthContext';
 
 export const Home: React.FC = () => {
     const navigate = useNavigate();
-    // Mock data for now
+    const { currentUser } = useAuth();
+    const [recentGames, setRecentGames] = React.useState<any[]>([]);
+
+    // Mock data for Next Draw (could be fetched later)
     const nextDraw = {
         contest: 2670,
         date: 'Amanhã, 20:00',
@@ -14,26 +20,35 @@ export const Home: React.FC = () => {
         accumulated: true,
     };
 
-    const recentGames = [
-        {
-            id: 1,
-            name: 'Bolão da Firma',
-            contest: 2670,
-            quota: 15,
-            status: 'Aguardando',
-            type: 'group',
-            numbers: [4, 11, 25, 33, 42, 59]
-        },
-        {
-            id: 2,
-            name: 'Aposta Individual',
-            contest: 2670,
-            description: 'Surpresinha',
-            status: 'Aguardando',
-            type: 'individual',
-            numbers: [2, 18, 29, 31, 45, 51]
-        }
-    ];
+    React.useEffect(() => {
+        if (!currentUser) return;
+
+        const fetchGames = async () => {
+            try {
+                const q = query(
+                    collection(db, 'games'),
+                    where("userId", "==", currentUser.uid)
+                    // Note: orderBy requires an index if mixed with where. 
+                    // skipping orderBy 'date' for now to avoid index creation error loop on MVP.
+                    // Client side sort can be done if needed.
+                );
+                const querySnapshot = await getDocs(q);
+                const games = querySnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+                // Client side sort by date (desc)
+                // @ts-ignore - date is Timestamp
+                games.sort((a, b) => (b.date?.seconds || 0) - (a.date?.seconds || 0));
+
+                setRecentGames(games);
+            } catch (error) {
+                console.error("Error fetching games:", error);
+            }
+        };
+
+        fetchGames();
+    }, [currentUser]);
 
     return (
         <div className="flex min-h-screen flex-col bg-background-light dark:bg-background-dark pb-24">
@@ -96,7 +111,7 @@ export const Home: React.FC = () => {
                             <span className="material-symbols-outlined text-xl">receipt_long</span>
                         </div>
                         <p className="text-text-secondary-light dark:text-text-secondary-dark text-sm font-medium">Meus Jogos</p>
-                        <p className="text-2xl font-bold text-text-primary-light dark:text-white">2</p>
+                        <p className="text-2xl font-bold text-text-primary-light dark:text-white">{recentGames.length}</p>
                     </div>
                     <div className="bg-white dark:bg-surface-dark p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col gap-1">
                         <div className="size-8 rounded-lg bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-2">
