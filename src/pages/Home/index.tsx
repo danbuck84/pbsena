@@ -4,9 +4,10 @@ import { BottomNav } from '../../components/layout/BottomNav';
 import { NumberBall } from '../../components/game/NumberBall';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../../lib/firebase';
-import { collection, query, where, getDocs } from 'firebase/firestore';
+import { collection, query, where, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import { useAuth } from '../../context/AuthContext';
 import { checkGamesAgainstResult } from '../../utils/gameLogic';
+import toast from 'react-hot-toast';
 
 export const Home: React.FC = () => {
     const navigate = useNavigate();
@@ -198,6 +199,39 @@ export const Home: React.FC = () => {
                                             />
                                         ))}
                                     </div>
+
+                                    {/* Actions */}
+                                    <div className="flex justify-end gap-3 mt-1 pt-2 border-t border-gray-50 dark:border-gray-800">
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                navigate('/new-game', { state: { editGame: game } });
+                                            }}
+                                            className="flex items-center gap-1 text-xs font-medium text-gray-400 hover:text-primary transition-colors"
+                                        >
+                                            <span className="material-symbols-outlined text-base">edit</span>
+                                            Editar
+                                        </button>
+                                        <button
+                                            onClick={async (e) => {
+                                                e.stopPropagation();
+                                                if (window.confirm('Tem certeza que deseja excluir este jogo?')) {
+                                                    try {
+                                                        await deleteDoc(doc(db, 'games', game.id));
+                                                        setRecentGames(prev => prev.filter(g => g.id !== game.id));
+                                                        toast.success('Jogo excluído com sucesso.');
+                                                    } catch (err) {
+                                                        console.error(err);
+                                                        toast.error('Erro ao excluir jogo.');
+                                                    }
+                                                }
+                                            }}
+                                            className="flex items-center gap-1 text-xs font-medium text-gray-400 hover:text-red-500 transition-colors"
+                                        >
+                                            <span className="material-symbols-outlined text-base">delete</span>
+                                            Excluir
+                                        </button>
+                                    </div>
                                 </div>
                             );
                         })
@@ -222,7 +256,7 @@ export const Home: React.FC = () => {
                     console.log('Navigating to', tab);
                     if (tab === 'home') navigate('/dashboard');
                     if (tab === 'groups') navigate('/groups');
-                    if (tab === 'profile') navigate('/login'); // Mock logout/profile nav
+                    if (tab === 'profile') navigate('/profile');
                 }}
             />
         </div>

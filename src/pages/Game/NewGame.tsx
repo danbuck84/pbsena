@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { Header } from '../../components/layout/Header';
 import { NumberBall } from '../../components/game/NumberBall';
 import { Button } from '../../components/ui/Button';
 import { db } from '../../lib/firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp, updateDoc, doc } from 'firebase/firestore';
 import { useAuth } from '../../context/AuthContext';
 
 export const NewGame: React.FC = () => {
@@ -42,6 +42,15 @@ export const NewGame: React.FC = () => {
         setSelectedNumbers(newNumbers.sort((a, b) => a - b));
     };
 
+    const { state } = useLocation();
+    const editGame = state?.editGame;
+
+    useEffect(() => {
+        if (editGame) {
+            setSelectedNumbers(editGame.numbers);
+        }
+    }, [editGame]);
+
     const handleSave = async () => {
         if (selectedNumbers.length < 6) return;
         if (!currentUser) {
@@ -51,14 +60,22 @@ export const NewGame: React.FC = () => {
 
         setLoading(true);
         try {
-            await addDoc(collection(db, 'games'), {
-                userId: currentUser.uid,
-                numbers: selectedNumbers,
-                date: serverTimestamp(),
-                status: 'pending',
-                type: 'individual' // Hardcoded for now
-            });
-            toast.success('Jogo salvo com sucesso!');
+            if (editGame) {
+                await updateDoc(doc(db, 'games', editGame.id), {
+                    numbers: selectedNumbers,
+                    updatedAt: serverTimestamp()
+                });
+                toast.success('Jogo atualizado com sucesso!');
+            } else {
+                await addDoc(collection(db, 'games'), {
+                    userId: currentUser.uid,
+                    numbers: selectedNumbers,
+                    date: serverTimestamp(),
+                    status: 'pending',
+                    type: 'individual'
+                });
+                toast.success('Jogo salvo com sucesso!');
+            }
             navigate('/dashboard');
         } catch (error) {
             console.error('Error saving game:', error);
@@ -71,7 +88,7 @@ export const NewGame: React.FC = () => {
     return (
         <div className="flex min-h-screen flex-col bg-background-light dark:bg-background-dark pb-safe">
             <Header
-                title="Novo Jogo"
+                title={editGame ? "Editar Jogo" : "Novo Jogo"}
                 showBack
                 onBack={() => navigate(-1)}
                 actions={
