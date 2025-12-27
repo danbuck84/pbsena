@@ -54,7 +54,7 @@ export const Home: React.FC = () => {
 
                     // Auto-save result if new
                     const alreadyExists = results.some((r: any) => r.contest === apiData.numero);
-                    if (!alreadyExists) {
+                    if (!alreadyExists && apiData.dezenas && Array.isArray(apiData.dezenas)) {
                         try {
                             const newResultData = {
                                 contest: apiData.numero,
@@ -63,7 +63,6 @@ export const Home: React.FC = () => {
                                 prize: 0 // Optional, not strictly needed for logic
                             };
                             await addDoc(collection(db, 'results'), newResultData);
-                            console.log("New result auto-saved from API:", apiData.numero);
                             latest = newResultData; // Use new data immediately for checking
                         } catch (saveErr) {
                             console.error("Auto-save failed", saveErr);
@@ -178,7 +177,7 @@ export const Home: React.FC = () => {
                         ) : (
                             <div className="py-2">
                                 <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark mb-1">Prêmio Estimado</p>
-                                <p className="text-4xl font-extrabold text-primary tracking-tight">{nextDrawInfo.prize}</p>
+                                <p className="text-3xl font-extrabold text-primary tracking-tighter break-words">{nextDrawInfo.prize}</p>
                             </div>
                         )}
 
